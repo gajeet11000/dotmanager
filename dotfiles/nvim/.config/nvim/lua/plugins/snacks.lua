@@ -1,3 +1,4 @@
+local utils = require "config.utils"
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -17,7 +18,17 @@ return {
       enabled = true,
       sources = {
         explorer = {
-          hidden = true
+          hidden = true,
+          actions = {
+            open_oil_float = utils.open_oil_using_explorer
+          },
+          win = {
+            list = {
+              keys = {
+                ["O"] = "open_oil_float"
+              }
+            }
+          }
         }
       }
     },

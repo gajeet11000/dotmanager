@@ -1,3 +1,4 @@
+local utils = require "config.utils"
 local map = vim.keymap.set
 
 
@@ -10,3 +11,7 @@ map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 map("n", "<leader>dl", function() Snacks.picker.diagnostics() end, { desc = "Diagnostics list" })
+
+map("n", "<C-w>h", "<C-w>s", {desc = "Open horizontal split"})
+
+map("n", "<leader>wf", utils.toggle_zoom, { desc = "Zoom/unzoom split" })
