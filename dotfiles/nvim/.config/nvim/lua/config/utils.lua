@@ -21,14 +21,12 @@ function M.open_oil_using_explorer(picker, item)
   require("oil").open_float(dir)
 end
 
-function M.toggle_zoom()
-  if vim.t.zoom_winrestcmd then
-    vim.cmd(vim.t.zoom_winrestcmd)
-    vim.t.zoom_winrestcmd = nil
+function M.toggle_zoom_tab()
+  if vim.t.is_zoom_tab then
+    vim.cmd("tabclose")
   else
-    vim.t.zoom_winrestcmd = vim.fn.winrestcmd()
-    vim.cmd("wincmd |")
-    vim.cmd("wincmd _")
+    vim.cmd("tab split")
+    vim.t.is_zoom_tab = true
   end
 end
 

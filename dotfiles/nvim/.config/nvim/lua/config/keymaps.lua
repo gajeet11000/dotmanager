@@ -14,4 +14,4 @@ map("n", "<leader>dl", function() Snacks.picker.diagnostics() end, { desc = "Dia
 
 map("n", "<C-w>h", "<C-w>s", {desc = "Open horizontal split"})
 
-map("n", "<leader>wf", utils.toggle_zoom, { desc = "Zoom/unzoom split" })
+map("n", "<leader>wf", utils.toggle_zoom_tab, { desc = "Zoom/unzoom split" })

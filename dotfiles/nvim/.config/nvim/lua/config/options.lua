@@ -30,6 +30,7 @@ vim.opt.showmatch = true -- Highlight matching brackets
 vim.opt.matchtime = 2 -- How long to show matching bracket
 vim.opt.completeopt = "menuone,noinsert,noselect" -- Completion options
 vim.opt.showmode = false -- Don't show mode in command line
+vim.opt.winbar = "%t" -- Don't show mode in command line
 
 -- File Handling
 vim.opt.backup = false -- Don't create backup files
