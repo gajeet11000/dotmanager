@@ -30,7 +30,21 @@ return {
             }
           }
         }
-      }
+      },
+      win = {
+        input = {
+          keys = {
+            ["<C-h>"] = { "edit_split", mode = { "i", "n" } },
+            ["<C-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<C-h>"] = "edit_split",
+            ["<C-v>"] = "edit_vsplit",
+          },
+        },
+      },
     },
     notifier = { enabled = true },
     quickfile = { enabled = true },
