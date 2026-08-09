@@ -12,6 +12,10 @@ map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 map("n", "<leader>dl", function() Snacks.picker.diagnostics() end, { desc = "Diagnostics list" })
 
-map("n", "<C-w>h", "<C-w>s", {desc = "Open horizontal split"})
+map("n", "<C-w>h", "<C-w>s", { desc = "Open horizontal split" })
 
 map("n", "<leader>wf", utils.toggle_zoom_tab, { desc = "Zoom/unzoom split" })
+
+map("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close tab" })
+map("n", "<leader>to", "<cmd>tabonly<CR>", { desc = "Close other tabs" })
+map("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "New tab" })
