@@ -1,7 +1,9 @@
 return {
   'nvim-focus/focus.nvim',
   version = '*',
-  event = "VeryLazy", -- load at startup (deferred slightly), not only on first keypress
+  keys = {
+    { "<leader>F", "<cmd>FocusToggle<CR>", desc = "Toggle Split Auto Focus" }
+  },
   opts = {
     autoresize = {
       minwidth = 12,
@@ -14,7 +16,8 @@ return {
       absolutenumber_unfocussed = true,
     }
   },
-  keys = {
-    { "<leader>F", "<cmd>FocusToggle<CR>", desc = "Toggle Split Auto Focus" }
-  }
+  config = function(_, opts)
+    require("focus").setup(opts)
+    vim.cmd("FocusDisable")   -- explicitly disable via command, not opts.enable
+  end,
 }
