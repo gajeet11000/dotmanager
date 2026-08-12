@@ -25,7 +25,6 @@ local sunglasses_enabled = true  -- plugin dims by default on startup with no se
 local function toggle_sunglasses()
   sunglasses_enabled = not sunglasses_enabled
   vim.cmd("SunglassesEnableToggle")
-
   if sunglasses_enabled then
     -- just turned dimming ON globally — immediately un-dim the window we're sitting in
     vim.cmd("SunglassesToggle")

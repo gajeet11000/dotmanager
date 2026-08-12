@@ -4,7 +4,7 @@ vim.opt.relativenumber = true -- Relative line numbers
 vim.opt.cursorline = true -- Highlight current line
 vim.opt.scrolloff = 10 -- Keep 10 lines above/below cursor
 vim.opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
-vim.opt.wrap = false -- Don't wrap lines
+vim.opt.wrap = true -- Don't wrap lines
 vim.opt.spelllang = { "en" } -- Set language for spellchecking
 
 -- Tabbing / Indentation
@@ -19,7 +19,7 @@ vim.opt.grepformat = "%f:%l:%c:%m" -- filename, line number, column, content
 -- Search Settings
 vim.opt.ignorecase = true -- Case-insensitive search
 vim.opt.smartcase = true -- Case-sensitive if uppercase in search
-vim.opt.hlsearch = false -- Don't highlight search results
+vim.opt.hlsearch = true -- Don't highlight search results
 vim.opt.incsearch = true -- Show matches as you type
 
 -- Visual Settings
@@ -31,6 +31,8 @@ vim.opt.matchtime = 2 -- How long to show matching bracket
 vim.opt.completeopt = "menuone,noinsert,noselect" -- Completion options
 vim.opt.showmode = false -- Don't show mode in command line
 vim.opt.winbar = "%t" -- Don't show mode in command line
+vim.opt.equalalways = false
+vim.opt.winminheight = 1
 
 -- File Handling
 vim.opt.backup = false -- Don't create backup files
@@ -57,8 +59,6 @@ end
 -- Behavior Settings
 vim.opt.selection = "inclusive" -- Use inclusive selection
 vim.opt.clipboard:append("unnamedplus") -- Use system clipboard
-vim.opt.modifiable = true -- Allow editing buffers
-vim.opt.encoding = "UTF-8" -- Use UTF-8 encoding
 
 -- Split Behavior
 vim.opt.splitbelow = true -- Horizontal splits open below
