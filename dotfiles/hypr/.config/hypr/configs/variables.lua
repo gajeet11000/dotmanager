@@ -12,7 +12,7 @@ M.LAUNCHER = string.format(
     M.HOME
 )
 M.BROWSER = "zen-browser"
-M.SCRATCHPAD_BROWSER = "chromium"
+M.SCRATCHPAD_BROWSER = "brave"
 M.CALCULATOR = "gnome-calculator"
 
 M.REFRESH_MIRRORS = M.SCRIPTS_DIR .. "/refresh_mirrors.sh"

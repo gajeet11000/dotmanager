@@ -19,3 +19,17 @@ map("n", "<leader>wf", utils.toggle_zoom_tab, { desc = "Zoom/unzoom split" })
 map("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close tab" })
 map("n", "<leader>to", "<cmd>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "New tab" })
+
+local sunglasses_enabled = true  -- plugin dims by default on startup with no setup needed
+
+local function toggle_sunglasses()
+  sunglasses_enabled = not sunglasses_enabled
+  vim.cmd("SunglassesEnableToggle")
+
+  if sunglasses_enabled then
+    -- just turned dimming ON globally — immediately un-dim the window we're sitting in
+    vim.cmd("SunglassesToggle")
+  end
+end
+
+vim.keymap.set("n", "<leader>ws", toggle_sunglasses, { desc = "Toggle dimming (current window stays clear)" })

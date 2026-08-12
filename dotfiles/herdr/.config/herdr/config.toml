@@ -2,21 +2,21 @@ onboarding = false
 # herdr configuration
 
 [theme]
-# tmux: set -g @plugin 'catppuccin/tmux' (@catppuccin_flavor "mocha")
 name = "catppuccin"
-# Follow the host terminal's light/dark appearance.
 auto_switch = true
 dark_name = "catppuccin"          # mocha
 light_name = "catppuccin-latte"
 
 [keys]
 prefix = "ctrl+s"
-# tmux: bind % split-window -h  (side-by-side panes, vertical divider)
-split_vertical = "prefix+%"
-# tmux: bind '"' split-window -v  (stacked panes, horizontal divider)
-split_horizontal = 'prefix+"'
-# tmux: bind c new-window
-new_tab = "prefix+c"
+new_tab = ["prefix+c", "ctrl+alt+t"]
+previous_tab = ["prefix+h", "ctrl+alt+h"]
+next_tab = ["prefix+l", "ctrl+alt+l"]
+split_vertical = ["prefix+v", "ctrl+alt+="]
+split_horizontal = ["prefix+minus", "ctrl+alt+-"]
+zoom = ["prefix+z", "ctrl+f"]
+close_pane = ["prefix+x", "ctrl+x"]
+close_tab = ["prefix+shift+x", "ctrl+alt+x"]
 
 
 [[keys.command]]
@@ -42,3 +42,6 @@ key = "ctrl+l"
 type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (vim/herdr)"
+
+[ui]
+agent_panel_sort = "spaces"

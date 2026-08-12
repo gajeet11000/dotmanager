@@ -89,13 +89,13 @@ hl.bind(SUPER .. "+KP_SUBTRACT", function() utils.zoom(-0.1) end, {repeating=tru
 hl.bind(SUPER_ALT .. "+P", hl.dsp.exec_cmd(utils.scratchpad_cmd({
     identifier="Whatsapp",
     scratch="Whatsapp",
-    exec="chromium --app=https://web.whatsapp.com"
+    exec= vars.SCRATCHPAD_BROWSER .. " --app=https://web.whatsapp.com"
 })))
 
 hl.bind(SUPER_ALT .. "+SPACE", hl.dsp.exec_cmd(utils.scratchpad_cmd({
     identifier="Youtube Music",
     scratch="Music",
-    exec="chromium --app=https://music.youtube.com"
+    exec= vars.SCRATCHPAD_BROWSER .. " --app=https://music.youtube.com"
 })))
 
 hl.bind(SUPER .. "+E", hl.dsp.exec_cmd(utils.scratchpad_cmd({
