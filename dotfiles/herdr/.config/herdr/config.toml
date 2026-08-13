@@ -1,5 +1,4 @@
 onboarding = false
-# herdr configuration
 
 [theme]
 name = "catppuccin"
