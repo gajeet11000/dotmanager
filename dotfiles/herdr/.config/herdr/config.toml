@@ -3,9 +3,9 @@ onboarding = false
 
 [theme]
 name = "catppuccin"
-auto_switch = true
+auto_switch = false
 dark_name = "catppuccin"          # mocha
-light_name = "catppuccin-latte"
+light_name = "terminal"
 
 [keys]
 prefix = "ctrl+s"
@@ -42,6 +42,18 @@ key = "ctrl+l"
 type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (vim/herdr)"
+
+[[keys.command]]
+key = "prefix+up"
+type = "plugin_action"
+command = "cloudmanic.herdr-plus.projects"
+description = "herdr-plus: projects"
+
+[[keys.command]]
+key = "prefix+down"
+type = "plugin_action"
+command = "cloudmanic.herdr-plus.quick-actions"
+description = "herdr-plus: quick actions"
 
 [ui]
 agent_panel_sort = "spaces"
