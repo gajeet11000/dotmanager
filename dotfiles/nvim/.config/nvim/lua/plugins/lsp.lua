@@ -5,6 +5,16 @@ return {
   },
 
   {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "prettierd",
+        "stylua",
+      },
+    },
+  },
+
+  {
     "mason-org/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {

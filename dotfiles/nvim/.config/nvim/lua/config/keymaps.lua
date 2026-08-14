@@ -4,7 +4,10 @@ local map = vim.keymap.set
 
 map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
-map("n", "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, { desc = "Format document" })
+map("n", "<leader>cf", function() require("conform").format({
+    async = true,
+    lsp_format = "fallback",
+  }) end, { desc = "Format document" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Hover docs" })
 
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
