@@ -10,7 +10,6 @@ alias lg="lazygit"
 alias ld="lazydocker"
 alias fontlist="fc-list : family | grep -v 'Noto' | sort -u | fzf"
 alias task="go-task"
-alias struct="struct.py"
 
 # Package Manager
 alias search="yay -Ss "
