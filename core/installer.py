@@ -18,13 +18,25 @@ def _validate_essentials(data: dict) -> None:
 def install_official(pkgs: list[str]) -> None:
     if not pkgs:
         return
-    shell.run(["sudo", "pacman", "-S", "--needed", *pkgs])
+    shell.run(["sudo", "pacman", "-Syu", "--needed", *pkgs])
 
 
 def install_aur(pkgs: list[str]) -> None:
     if not pkgs:
         return
-    shell.run([AUR_HELPER, "-S", "--needed", *pkgs])
+    shell.run(
+        [
+            AUR_HELPER,
+            "-Syu",
+            "--noconfirm",
+            "--needed",
+            "--answerdiff",
+            "None",
+            "--answerclean",
+            "NotInstalled",
+            *pkgs,
+        ]
+    )
 
 
 def install_flatpak(pkgs: list[str]) -> None:
