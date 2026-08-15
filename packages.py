@@ -100,6 +100,8 @@ ARCH_PACKAGES = {
     "qt6-declarative",
     "qt6-svg",
     "qt6ct",
+    "rclone",
+    "restic",
     "rofi-wayland",
     "sddm",
     "starship",
