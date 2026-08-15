@@ -8,22 +8,13 @@ STOW_DIR = "~/dotfiles"
 # Where stow symlinks get placed. Normally your home dir.
 TARGET_DIR = "~"
 
-# Partitions to mount at boot via /etc/fstab.
-FSTAB_ENTRIES = [
-    {
-        "label": "Windows",
-        "mount_point": "/mnt/Windows",
-        "fstype": "ntfs3",
-        "options": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
-        "dump": 0,
-        "pass": 0,
-    },
-    {
-        "label": "Storage",
-        "mount_point": "/mnt/Storage",
-        "fstype": "ntfs3",
-        "options": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
-        "dump": 0,
-        "pass": 0,
-    },
-]
+# Default mount options by filesystem type, used when adding a new fstab
+# entry interactively (`setup fstab`). uid/gid=1000 assumes your normal user
+# is the first non-system user account (check with `id -u` if unsure).
+FSTAB_DEFAULT_OPTIONS = {
+    "ntfs3": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
+    "ntfs": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
+    "exfat": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
+    "vfat": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
+}
+FSTAB_DEFAULT_OPTIONS_FALLBACK = "defaults,nofail"
