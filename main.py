@@ -2,10 +2,11 @@
 import argparse
 import sys
 
-from core import installer, package_manager, stow_manager
+from core import backup, backup_manager, installer, package_manager, stow_manager
 from core.setups import docker as docker_setup
 from core.setups import fish_shell as fish_setup
 from core.setups import fstab as fstab_setup
+from core.setups import nwg_look as nwg_look_setup
 from core.setups import sddm as sddm_setup
 
 
@@ -78,6 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
     setup_sub.add_parser(
         "fish", help="Set fish as default shell and apply Catppuccin Mocha theme"
     )
+    setup_sub.add_parser("nwg_look", help="Apply current gsettings via nwg-look -a")
 
     sddm_parser = setup_sub.add_parser(
         "sddm", help="SDDM theme, session, and cursor setup"
@@ -98,6 +100,60 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sddm_sub.add_parser(
         "all", help="Run install, theme, session, cursor-theme, cursor-size in order"
+    )
+
+    backup_parser = subparsers.add_parser(
+        "backup", help="Encrypted backup & sync via restic + rclone"
+    )
+    backup_sub = backup_parser.add_subparsers(dest="action", required=True)
+
+    add_action = backup_sub.add_parser(
+        "add", help="Add a folder to the backup target list"
+    )
+    add_action.add_argument("name", help="Short identifier, e.g. zen-profile")
+    add_action.add_argument("path", help="Path to back up, e.g. ~/.zen")
+
+    remove_action = backup_sub.add_parser("remove", help="Remove a target by name")
+    remove_action.add_argument("name")
+
+    backup_sub.add_parser("list", help="List configured backup targets")
+    backup_sub.add_parser("check", help="Verify restic/rclone/bw prerequisites")
+    backup_sub.add_parser("init", help="Initialize the restic repository (idempotent)")
+
+    run_action = backup_sub.add_parser("run", help="Run a backup snapshot")
+    run_action.add_argument(
+        "targets", nargs="*", default=["all"], help="Target name(s), default: all"
+    )
+
+    du_action = backup_sub.add_parser(
+        "du", help="Show size breakdown per target (no restic/rclone involved)"
+    )
+    du_action.add_argument(
+        "targets", nargs="*", default=["all"], help="Target name(s), default: all"
+    )
+
+    backup_sub.add_parser(
+        "stats", help="Show total repo size on Dropbox (post-dedup, post-compression)"
+    )
+
+    forget_action = backup_sub.add_parser(
+        "forget", help="Drop old snapshots and reclaim their space (forget + prune)"
+    )
+    forget_action.add_argument(
+        "--keep-last",
+        type=int,
+        default=1,
+        help="How many most-recent snapshots to keep (default: 1)",
+    )
+
+    backup_sub.add_parser("snapshots", help="List existing snapshots")
+
+    restore_action = backup_sub.add_parser("restore", help="Restore a snapshot")
+    restore_action.add_argument("snapshot", help="Snapshot ID, or 'latest'")
+    restore_action.add_argument(
+        "--target",
+        default=None,
+        help="Restore destination (default: config.RESTORE_STAGING_DIR)",
     )
 
     return parser
@@ -139,6 +195,38 @@ def main() -> None:
             print(f"Error: {e}", file=sys.stderr)
             sys.exit(1)
 
+    elif args.command == "backup":
+        if args.action == "add":
+            try:
+                backup_manager.add_target(args.name, args.path)
+            except ValueError as e:
+                print(f"Error: {e}", file=sys.stderr)
+                sys.exit(1)
+        elif args.action == "remove":
+            backup_manager.remove_target(args.name)
+        elif args.action == "list":
+            targets = backup_manager.list_targets()
+            if not targets:
+                print("No backup targets configured.")
+            for t in targets:
+                print(f"  {t['name']:<15} {t['path']}")
+        elif args.action == "check":
+            backup.check()
+        elif args.action == "init":
+            backup.init()
+        elif args.action == "run":
+            backup.run(args.targets)
+        elif args.action == "du":
+            backup.sizes(args.targets)
+        elif args.action == "stats":
+            backup.stats()
+        elif args.action == "forget":
+            backup.forget(args.keep_last)
+        elif args.action == "snapshots":
+            backup.snapshots()
+        elif args.action == "restore":
+            backup.restore(args.snapshot, args.target)
+
     elif args.command == "setup":
         if args.target == "docker":
             docker_setup.setup()
@@ -146,6 +234,8 @@ def main() -> None:
             fstab_setup.setup()
         elif args.target == "fish":
             fish_setup.setup()
+        elif args.target == "nwg_look":
+            nwg_look_setup.setup()
         elif args.target == "sddm":
             if args.action == "install":
                 sddm_setup.install_theme()

@@ -1,13 +1,35 @@
+import os
 import shutil
 import subprocess
 import sys
 
 
-def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess:
+def run(
+    cmd: list[str], check: bool = True, env: dict | None = None
+) -> subprocess.CompletedProcess:
     print(f"\n$ {' '.join(cmd)}\n")
-    result = subprocess.run(cmd)
+    full_env = {**os.environ, **env} if env else None
+    result = subprocess.run(cmd, env=full_env)
     if check and result.returncode != 0:
         print(f"Command failed: {' '.join(cmd)}", file=sys.stderr)
+        sys.exit(result.returncode)
+    return result
+
+
+def run_capture(
+    cmd: list[str], check: bool = True, env: dict | None = None
+) -> subprocess.CompletedProcess:
+    """Like run(), but captures stdout/stderr instead of streaming them.
+
+    Used where we need to parse or inspect output (e.g. `rclone listremotes`,
+    `bw status`) rather than just show it to the user.
+    """
+    full_env = {**os.environ, **env} if env else None
+    result = subprocess.run(cmd, env=full_env, capture_output=True, text=True)
+    if check and result.returncode != 0:
+        print(f"Command failed: {' '.join(cmd)}", file=sys.stderr)
+        if result.stderr:
+            print(result.stderr, file=sys.stderr)
         sys.exit(result.returncode)
     return result
 

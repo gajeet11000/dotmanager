@@ -1,0 +1,49 @@
+# One glob pattern per line, passed straight to `restic --exclude-file`.
+# https://restic.readthedocs.io/en/latest/040_backup.html#excluding-files
+#
+# Applies across ALL targets in backup_targets.json, so add anything here
+# once (e.g. before adding a coding-project folder as a target) rather than
+# per-target.
+
+# --- Firefox/Zen browser profile cache & regenerable data ---
+# These are the directories that actually bloat a profile backup; none of
+# them are needed to restore your settings, keybindings, cookies, history,
+# or bookmarks - they're rebuilt automatically the next time the browser runs.
+# Run `python3 main.py backup du zen-profile` on your real profile and check
+# the breakdown against this list - profile layouts drift between versions.
+**/cache2
+**/startupCache
+**/OfflineCache
+**/jumpListCache
+**/thumbnails
+**/safebrowsing
+**/minidumps
+**/crashes
+**/storage/default/https+++*
+**/storage/default/http+++*
+**/storage/permanent/chrome
+**/gmp-widevinecdm
+**/gmp-gmpopenh264
+# Deliberately NOT excluding storage/default/moz-extension+++* - that's
+# per-extension local storage (browser.storage.local), which is where a
+# keyboard-shortcut/config extension could keep settings that don't sync.
+# Also NOT excluding sessionstore-backups or zen-sessions-backup - small
+# (tens of MB) and it's your actual open-tabs/session history.
+
+# Python
+**/__pycache__
+**/*.pyc
+**/.venv
+**/venv
+
+# Node / JS
+**/node_modules
+
+# Rust
+**/target
+
+# General caches / build junk
+**/.cache
+*.cache
+**/dist
+**/build

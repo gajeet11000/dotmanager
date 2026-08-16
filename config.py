@@ -29,3 +29,26 @@ SDDM_COMPOSITOR_COMMAND = "weston --shell=kiosk"
 
 # Fish shell color theme, expected at ~/.config/fish/themes/<name>.theme
 FISH_THEME_NAME = "Catppuccin Mocha"
+
+
+# ---- backup (restic + rclone) -------------------------------------------
+
+# Name of the rclone remote to use as the restic backend (`rclone config`
+# must have this set up already — restic itself never talks to Dropbox
+# directly, it hands off to rclone via the rclone: backend).
+RCLONE_REMOTE = "dropbox"
+
+# Path *within* that remote where the restic repo lives.
+RCLONE_REPO_PATH = "dotmanager-backup"
+
+# Where the backup target list and exclude file live.
+BACKUP_TARGETS_FILE = "backup_targets.json"
+BACKUP_EXCLUDE_FILE = "backup_excludes.txt"
+
+# Default restore staging directory, used when `backup restore` is run
+# without --target. restic recreates each backed-up path's full original
+# path underneath this, so nothing gets overwritten in place unless you
+# explicitly pass --target / (or another existing path) yourself.
+RESTORE_STAGING_DIR = "~/restic-restore"
+
+
