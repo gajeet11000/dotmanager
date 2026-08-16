@@ -338,6 +338,29 @@ def set_cursor_size() -> None:
     _update_greeter_environment({"XCURSOR_SIZE": raw})
 
 
+# ---- 6. virtual keyboard -------------------------------------------------------
+
+
+def _package_installed(pkg: str) -> bool:
+    result = shell.run(["pacman", "-Qq", pkg], check=False)
+    return result.returncode == 0
+
+
+def set_virtual_keyboard() -> None:
+    if not _package_installed("qt6-virtualkeyboard"):
+        print(
+            "Warning: 'qt6-virtualkeyboard' doesn't look installed. The on-screen keyboard "
+            "toggle will stay a no-op without it. Add and install it with:\n"
+            "  python3 main.py manage add qt6-virtualkeyboard\n"
+            "  python3 main.py install essentials"
+        )
+    _set_conf_value(SDDM_CONF_PATH, "General", "InputMethod", "qtvirtualkeyboard")
+    # As with the cursor, InputMethod= alone doesn't reliably reach the greeter
+    # process's actual environment. Forcing QT_IM_MODULE directly is the
+    # confirmed fix (see KDE bug D5061).
+    _update_greeter_environment({"QT_IM_MODULE": "qtvirtualkeyboard"})
+
+
 # ---- orchestrator ------------------------------------------------------------
 
 
@@ -347,3 +370,4 @@ def run_all() -> None:
     set_display_server()
     set_cursor_theme()
     set_cursor_size()
+    set_virtual_keyboard()

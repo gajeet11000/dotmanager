@@ -92,6 +92,9 @@ def build_parser() -> argparse.ArgumentParser:
     sddm_sub.add_parser("cursor-theme", help="Set the greeter cursor theme")
     sddm_sub.add_parser("cursor-size", help="Set the greeter cursor size")
     sddm_sub.add_parser(
+        "virtual-keyboard", help="Enable the theme's on-screen keyboard toggle"
+    )
+    sddm_sub.add_parser(
         "all", help="Run install, theme, session, cursor-theme, cursor-size in order"
     )
 
@@ -150,6 +153,8 @@ def main() -> None:
                 sddm_setup.set_cursor_theme()
             elif args.action == "cursor-size":
                 sddm_setup.set_cursor_size()
+            elif args.action == "virtual-keyboard":
+                sddm_setup.set_virtual_keyboard()
             elif args.action == "all":
                 sddm_setup.run_all()
 
