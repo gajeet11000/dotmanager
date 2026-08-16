@@ -2,10 +2,9 @@
 import argparse
 import sys
 
-from core import installer
-from core import package_manager
-from core import stow_manager
+from core import installer, package_manager, stow_manager
 from core.setups import docker as docker_setup
+from core.setups import fish_shell as fish_setup
 from core.setups import fstab as fstab_setup
 from core.setups import sddm as sddm_setup
 
@@ -76,6 +75,9 @@ def build_parser() -> argparse.ArgumentParser:
         "docker", help="Enable docker service, group, add current user"
     )
     setup_sub.add_parser("fstab", help="Interactively add partitions to /etc/fstab")
+    setup_sub.add_parser(
+        "fish", help="Set fish as default shell and apply Catppuccin Mocha theme"
+    )
 
     sddm_parser = setup_sub.add_parser(
         "sddm", help="SDDM theme, session, and cursor setup"
@@ -142,6 +144,8 @@ def main() -> None:
             docker_setup.setup()
         elif args.target == "fstab":
             fstab_setup.setup()
+        elif args.target == "fish":
+            fish_setup.setup()
         elif args.target == "sddm":
             if args.action == "install":
                 sddm_setup.install_theme()

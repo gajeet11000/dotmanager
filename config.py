@@ -26,3 +26,6 @@ SDDM_THEME_DIR = f"/usr/share/sddm/themes/{SDDM_THEME_NAME}"
 
 # Compositor SDDM's greeter runs under when DisplayServer=wayland
 SDDM_COMPOSITOR_COMMAND = "weston --shell=kiosk"
+
+# Fish shell color theme, expected at ~/.config/fish/themes/<name>.theme
+FISH_THEME_NAME = "Catppuccin Mocha"
