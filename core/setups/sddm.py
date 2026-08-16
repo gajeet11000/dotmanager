@@ -5,10 +5,10 @@ from datetime import datetime
 from pathlib import Path
 
 from config import (
-    SDDM_THEME_REPO,
-    SDDM_THEME_NAME,
-    SDDM_THEME_DIR,
     SDDM_COMPOSITOR_COMMAND,
+    SDDM_THEME_DIR,
+    SDDM_THEME_NAME,
+    SDDM_THEME_REPO,
 )
 from core import shell
 
