@@ -18,3 +18,11 @@ FSTAB_DEFAULT_OPTIONS = {
     "vfat": "rw,uid=1000,gid=1000,nofail,x-gvfs-show",
 }
 FSTAB_DEFAULT_OPTIONS_FALLBACK = "defaults,nofail"
+
+# SDDM astronaut theme (https://github.com/keyitdev/sddm-astronaut-theme)
+SDDM_THEME_REPO = "https://github.com/keyitdev/sddm-astronaut-theme.git"
+SDDM_THEME_NAME = "sddm-astronaut-theme"
+SDDM_THEME_DIR = f"/usr/share/sddm/themes/{SDDM_THEME_NAME}"
+
+# Compositor SDDM's greeter runs under when DisplayServer=wayland
+SDDM_COMPOSITOR_COMMAND = "weston --shell=kiosk"

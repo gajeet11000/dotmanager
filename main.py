@@ -7,6 +7,7 @@ from core import package_manager
 from core import stow_manager
 from core.setups import docker as docker_setup
 from core.setups import fstab as fstab_setup
+from core.setups import sddm as sddm_setup
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -66,14 +67,32 @@ def build_parser() -> argparse.ArgumentParser:
         "--force", action="store_true", help="Skip confirmation prompt"
     )
 
-    # program setup subcommands will be added here in a later step
     setup_parser = subparsers.add_parser(
         "setup", help="Run program-specific setup routines"
     )
-    setup_parser.add_argument(
-        "target",
-        choices=["docker", "fstab"],
-        help="Which setup to run",
+    setup_sub = setup_parser.add_subparsers(dest="target", required=True)
+
+    setup_sub.add_parser(
+        "docker", help="Enable docker service, group, add current user"
+    )
+    setup_sub.add_parser("fstab", help="Interactively add partitions to /etc/fstab")
+
+    sddm_parser = setup_sub.add_parser(
+        "sddm", help="SDDM theme, session, and cursor setup"
+    )
+    sddm_sub = sddm_parser.add_subparsers(dest="action", required=True)
+    sddm_sub.add_parser(
+        "install", help="Clone the astronaut theme, install its fonts, pick a style"
+    )
+    sddm_sub.add_parser("theme", help="Set the active SDDM theme")
+    sddm_sub.add_parser(
+        "display-server",
+        help="Pick the SDDM greeter's display server mode (wayland/x11-user/x11)",
+    )
+    sddm_sub.add_parser("cursor-theme", help="Set the greeter cursor theme")
+    sddm_sub.add_parser("cursor-size", help="Set the greeter cursor size")
+    sddm_sub.add_parser(
+        "all", help="Run install, theme, session, cursor-theme, cursor-size in order"
     )
 
     return parser
@@ -120,6 +139,19 @@ def main() -> None:
             docker_setup.setup()
         elif args.target == "fstab":
             fstab_setup.setup()
+        elif args.target == "sddm":
+            if args.action == "install":
+                sddm_setup.install_theme()
+            elif args.action == "theme":
+                sddm_setup.set_theme()
+            elif args.action == "display-server":
+                sddm_setup.set_display_server()
+            elif args.action == "cursor-theme":
+                sddm_setup.set_cursor_theme()
+            elif args.action == "cursor-size":
+                sddm_setup.set_cursor_size()
+            elif args.action == "all":
+                sddm_setup.run_all()
 
 
 if __name__ == "__main__":
