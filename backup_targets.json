@@ -6,9 +6,5 @@
   {
     "name": "zen-profile",
     "path": "~/.zen"
-  },
-  {
-    "name": "documents",
-    "path": "~/Documents"
   }
 ]
