@@ -51,4 +51,6 @@ BACKUP_EXCLUDE_FILE = "backup_excludes.txt"
 # explicitly pass --target / (or another existing path) yourself.
 RESTORE_STAGING_DIR = "~/restic-restore"
 
-
+BW_RESTIC_ITEM_NAME = "dotmanager-restic-repo"
+BW_RCLONE_CONFIG_ITEM_NAME = "dotmanager-rclone-conf"
+RCLONE_CONFIG_PATH = "~/.config/rclone/rclone.conf"

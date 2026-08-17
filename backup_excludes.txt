@@ -24,6 +24,10 @@
 **/storage/permanent/chrome
 **/gmp-widevinecdm
 **/gmp-gmpopenh264
+
+Include the google account so that we dont get logged out!
+!**/storage/default/https+++accounts.google.com
+
 # Deliberately NOT excluding storage/default/moz-extension+++* - that's
 # per-extension local storage (browser.storage.local), which is where a
 # keyboard-shortcut/config extension could keep settings that don't sync.

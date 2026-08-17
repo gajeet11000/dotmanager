@@ -135,6 +135,23 @@ def build_parser() -> argparse.ArgumentParser:
     backup_sub.add_parser(
         "stats", help="Show total repo size on Dropbox (post-dedup, post-compression)"
     )
+    bootstrap_action = backup_sub.add_parser(
+        "bootstrap",
+        help="Fresh-machine setup: pull rclone config from Bitwarden, init, restore everything in place",
+    )
+
+    restore_all_action = backup_sub.add_parser(
+        "restore-all",
+        help="Restore latest snapshot of every target to its original location",
+    )
+    restore_all_action.add_argument(
+        "--target", default="/", help="Restore destination (default: /)"
+    )
+    forget_tag_action = backup_sub.add_parser(
+        "forget-tag",
+        help="Wipe ALL snapshots for one tag/target entirely (forget + prune)",
+    )
+    forget_tag_action.add_argument("tag", help="Tag name (matches a target name)")
 
     forget_action = backup_sub.add_parser(
         "forget", help="Drop old snapshots and reclaim their space (forget + prune)"
@@ -210,6 +227,13 @@ def main() -> None:
                 print("No backup targets configured.")
             for t in targets:
                 print(f"  {t['name']:<15} {t['path']}")
+
+        elif args.action == "forget-tag":
+            backup.forget_tag(args.tag)
+        elif args.action == "bootstrap":
+            backup.bootstrap()
+        elif args.action == "restore-all":
+            backup.restore_all(args.target)
         elif args.action == "check":
             backup.check()
         elif args.action == "init":

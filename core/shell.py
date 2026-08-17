@@ -5,11 +5,11 @@ import sys
 
 
 def run(
-    cmd: list[str], check: bool = True, env: dict | None = None
+    cmd: list[str], check: bool = True, env: dict | None = None, cwd: str | None = None
 ) -> subprocess.CompletedProcess:
     print(f"\n$ {' '.join(cmd)}\n")
     full_env = {**os.environ, **env} if env else None
-    result = subprocess.run(cmd, env=full_env)
+    result = subprocess.run(cmd, env=full_env, cwd=cwd)
     if check and result.returncode != 0:
         print(f"Command failed: {' '.join(cmd)}", file=sys.stderr)
         sys.exit(result.returncode)

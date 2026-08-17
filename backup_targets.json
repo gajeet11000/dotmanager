@@ -1,10 +1,10 @@
 [
   {
-    "name": "zen-profile",
-    "path": "~/.zen"
-  },
-  {
     "name": "pictures",
     "path": "~/Pictures"
+  },
+  {
+    "name": "zen-profile",
+    "path": "~/.zen"
   }
 ]
