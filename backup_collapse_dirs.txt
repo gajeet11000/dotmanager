@@ -1,0 +1,32 @@
+# Directory names that `backup du` should show as a single collapsed total
+# and never expand into, no matter how high --depth is set. These are the
+# "no judgment needed, always junk" directories (build output, dependency
+# caches, etc.) - contrast with something like a browser profile's storage/
+# folder, where deciding what's safe to skip takes actually looking inside.
+#
+# This is a plain list of directory NAMES (not glob patterns) - one per
+# line. Most of these already have a matching pattern in
+# backup_excludes.txt too; the two files serve different purposes (that
+# one controls what restic actually excludes, this one only controls what
+# `backup du` bothers expanding) so keep both in sync by hand if you add
+# something here that should also never be backed up.
+
+node_modules
+.venv
+venv
+__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.tox
+.next
+out
+.turbo
+.vercel
+.parcel-cache
+.gradle
+.idea
+target
+dist
+build
+.cache

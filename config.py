@@ -54,3 +54,13 @@ RESTORE_STAGING_DIR = "~/restic-restore"
 BW_RESTIC_ITEM_NAME = "dotmanager-restic-repo"
 BW_RCLONE_CONFIG_ITEM_NAME = "dotmanager-rclone-conf"
 RCLONE_CONFIG_PATH = "~/.config/rclone/rclone.conf"
+
+BACKUP_COLLAPSE_DIRS_FILE = "backup_collapse_dirs.txt"
+
+# A tiny, purely-local, throwaway restic repo used ONLY by `backup preview`
+# to run restic's exclude-pattern matching (--dry-run) offline. It never
+# holds a real snapshot (dry-run never writes anything) and never talks to
+# Dropbox, so `preview` needs no internet, no bw unlock, no rclone remote -
+# it's local-only, matching what `preview` is actually meant to answer
+# ("what would exclusion leave behind", not "what's changed vs. Dropbox").
+PREVIEW_SCRATCH_REPO = "~/.cache/dotmanager/preview-scratch-repo"

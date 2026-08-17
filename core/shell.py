@@ -17,7 +17,7 @@ def run(
 
 
 def run_capture(
-    cmd: list[str], check: bool = True, env: dict | None = None
+    cmd: list[str], check: bool = True, env: dict | None = None, cwd: str | None = None
 ) -> subprocess.CompletedProcess:
     """Like run(), but captures stdout/stderr instead of streaming them.
 
@@ -25,7 +25,7 @@ def run_capture(
     `bw status`) rather than just show it to the user.
     """
     full_env = {**os.environ, **env} if env else None
-    result = subprocess.run(cmd, env=full_env, capture_output=True, text=True)
+    result = subprocess.run(cmd, env=full_env, cwd=cwd, capture_output=True, text=True)
     if check and result.returncode != 0:
         print(f"Command failed: {' '.join(cmd)}", file=sys.stderr)
         if result.stderr:

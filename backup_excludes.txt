@@ -37,11 +37,42 @@ Include the google account so that we dont get logged out!
 # Python
 **/__pycache__
 **/*.pyc
+**/*.pyo
 **/.venv
 **/venv
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.tox
+**/*.egg-info
+**/htmlcov
+**/.coverage
 
-# Node / JS
+# Node / JavaScript (general, also covers most of Next.js)
 **/node_modules
+**/.next
+**/out
+**/.turbo
+**/.vercel
+**/.parcel-cache
+**/.eslintcache
+**/coverage
+**/*.log
+**/npm-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# Java / Spring Boot (Maven + Gradle)
+**/.gradle
+**/*.class
+# NOTE: Maven's default output dir is also called "target" and Gradle's is
+# also called "build" - both already covered below under "Rust", since
+# Rust's cargo happens to use the exact same folder names.
+**/.idea
+**/*.iml
+**/.classpath
+**/.project
+**/.settings
 
 # Rust
 **/target
