@@ -3,7 +3,7 @@
 AUR_HELPER = "yay"
 
 # Where your stow packages live (your dotfiles repo).
-STOW_DIR = "~/dotfiles"
+STOW_DIR = "~/Projects/dotmanager/dotfiles"
 
 # Where stow symlinks get placed. Normally your home dir.
 TARGET_DIR = "~"
