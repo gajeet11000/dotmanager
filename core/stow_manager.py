@@ -29,7 +29,7 @@ def _resolve_targets(names: list[str]) -> list[str]:
 
 
 def _run_stow(flag: str | None, names: list[str]) -> None:
-    cmd = ["stow", "-d", str(_stow_dir()), "-t", str(_target_dir())]
+    cmd = ["stow", "--no-folding", "-d", str(_stow_dir()), "-t", str(_target_dir())]
     if flag:
         cmd.append(flag)
     cmd.extend(names)
