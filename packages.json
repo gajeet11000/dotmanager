@@ -1,5 +1,6 @@
 {
   "aur": [
+    "dbeaver-ce-jre-bin",
     "zen-browser-bin",
     "visual-studio-code-bin",
     "bibata-rainbow-cursor-theme",
@@ -33,7 +34,6 @@
     "brightnessctl",
     "btop",
     "chromium",
-    "dbeaver-ce-jre-bin",
     "deluge-gtk",
     "docker",
     "docker-compose",
