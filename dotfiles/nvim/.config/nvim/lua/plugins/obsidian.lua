@@ -11,7 +11,7 @@ return {
     workspaces = {
       {
         name = "Personal",
-        path = "~/Documents/Obsidian/MyVault",
+        path = "~/Projects/Obsidian/MyVault",
       },
     },
   },
