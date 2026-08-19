@@ -11,7 +11,9 @@
     "sublime-text-4",
     "slack-desktop",
     "postman-bin",
-    "waypaper"
+    "waypaper",
+    "clipse",
+    "stacer-bin",
   ],
 
   "flatpak": [
