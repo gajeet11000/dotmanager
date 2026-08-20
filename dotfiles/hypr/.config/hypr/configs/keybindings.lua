@@ -10,7 +10,8 @@ local SUPER_ALT = "SUPER+ALT"
 -- ###################
 
 -- Scripts
-hl.bind(SUPER .. "+RETURN", hl.dsp.exec_cmd(vars.TERMINAL))
+hl.bind(SUPER_ALT .. "+RETURN", hl.dsp.exec_cmd(vars.TERMINAL))
+hl.bind(SUPER .. "+RETURN", hl.dsp.exec_cmd(vars.TERMINAL_MULPLEX))
 hl.bind(SUPER_ALT .. "+N", hl.dsp.exec_cmd(vars.TERMINAL))
 hl.bind(SUPER_SHIFT .. "+E", hl.dsp.exec_cmd(vars.FILE_MANAGER))
 hl.bind(SUPER .. "+A", hl.dsp.exec_cmd(vars.FILE_MANAGER .. " " .. vars.STORAGE_DIR))

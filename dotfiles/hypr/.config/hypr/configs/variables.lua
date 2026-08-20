@@ -6,6 +6,7 @@ M.STORAGE_DIR = "/mnt/Storage/"
 
 M.EDITOR = "nvim"
 M.TERMINAL = "kitty"
+M.TERMINAL_MULPLEX = "kitty -e herdr"
 M.FILE_MANAGER = "thunar"
 M.LAUNCHER = string.format(
     'rofi -show drun -config "%s/.config/rofi/configs/application_launcher.rasi"',
