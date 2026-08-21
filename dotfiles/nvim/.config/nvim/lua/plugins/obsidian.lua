@@ -8,6 +8,9 @@ return {
     picker = {
       name = "snacks.picker",
     },
+    templates = {
+      folder = "Templates",
+    },
     workspaces = {
       {
         name = "Personal",
