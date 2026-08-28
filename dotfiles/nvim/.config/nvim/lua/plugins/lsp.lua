@@ -10,6 +10,7 @@ return {
       ensure_installed = {
         "prettierd",
         "stylua",
+        "djlint",
       },
     },
   },
@@ -33,6 +34,7 @@ return {
 
         "jsonls",
         "bashls",
+        "jinja_lsp",
 
         "yamlls",
 
