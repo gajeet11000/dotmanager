@@ -16,6 +16,7 @@ from core.setups import fish_shell as fish_setup
 from core.setups import fstab as fstab_setup
 from core.setups import gtk_theme as gtk_theme_setup
 from core.setups import nwg_look as nwg_look_setup
+from core.setups import papirus_folders as papirus_folders_setup
 from core.setups import sddm as sddm_setup
 
 
@@ -81,18 +82,19 @@ def build_parser() -> argparse.ArgumentParser:
 
     # ---- theme ----
     theme_parser = subparsers.add_parser(
-        "theme", help="Switch the active GTK theme live, no logout needed"
+        "theme",
+        help="Switch the active theme (GTK, icons, ...) live, no logout needed",
     )
     theme_sub = theme_parser.add_subparsers(dest="action", required=True)
 
     theme_set_action = theme_sub.add_parser(
-        "set", help="Set and live-apply the active GTK theme"
+        "set", help="Set and live-apply a theme across all its supported apps"
     )
     theme_set_action.add_argument(
-        "name", help="Installed theme name, e.g. Gruvbox-Dark (see 'theme list')"
+        "name", help="Theme name, e.g. gruvbox-dark (see 'theme list')"
     )
 
-    theme_sub.add_parser("list", help="List installed GTK theme names")
+    theme_sub.add_parser("list", help="List available theme names")
 
     # ---- setup ----
     setup_parser = subparsers.add_parser(
@@ -117,6 +119,10 @@ def build_parser() -> argparse.ArgumentParser:
     setup_sub.add_parser(
         "cursor_theme",
         help="Install Bibata-Rainbow-Modern cursor theme system-wide from the bundled tar.gz (no AUR rebuild)",
+    )
+    setup_sub.add_parser(
+        "papirus_folders",
+        help="Install the papirus-folders CLI + Catppuccin colored folder icons (no AUR rebuild)",
     )
 
     sddm_parser = setup_sub.add_parser(
@@ -319,7 +325,7 @@ def main() -> None:
                 print(f"Error: {e}", file=sys.stderr)
                 sys.exit(1)
         elif args.action == "list":
-            for name in theme_manager.list_installed():
+            for name in theme_manager.list_themes():
                 print(f"  {name}")
 
     elif args.command == "setup":
@@ -335,6 +341,8 @@ def main() -> None:
             gtk_theme_setup.setup()
         elif args.target == "cursor_theme":
             cursor_theme_setup.setup()
+        elif args.target == "papirus_folders":
+            papirus_folders_setup.setup()
         elif args.target == "sddm":
             if args.action == "install":
                 sddm_setup.install_theme()
