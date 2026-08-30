@@ -14,8 +14,9 @@ THEME_SEARCH_DIRS = [Path("/usr/share/themes"), Path.home() / ".local" / "share"
 #
 # Current keys: gtk_theme, color_scheme (gtk_theme.py), icon_theme,
 # icon_accent (icon_theme.py), kitty_theme (kitty_theme.py), lsd_theme
-# (lsd_theme.py). Future: fish_theme, nvim_colorscheme, yazi_theme, ... —
-# add the key here once its applier exists in core/theme_appliers/.
+# (lsd_theme.py), nvim_theme (nvim_theme.py). Future: fish_theme,
+# yazi_theme, ... — add the key here once its applier exists in
+# core/theme_appliers/.
 THEMES: dict[str, dict] = {
     "gruvbox-dark": {
         "gtk_theme": "Gruvbox-Dark",
@@ -24,6 +25,7 @@ THEMES: dict[str, dict] = {
         "icon_accent": "orange",
         "kitty_theme": "gruvbox-dark",
         "lsd_theme": "gruvbox-dark",
+        "nvim_theme": "gruvbox-dark",
     },
     "gruvbox-light": {
         "gtk_theme": "Gruvbox-Light",
@@ -32,6 +34,7 @@ THEMES: dict[str, dict] = {
         "icon_accent": "orange",
         "kitty_theme": "gruvbox-light",
         "lsd_theme": "gruvbox-light",
+        "nvim_theme": "gruvbox-light",
     },
     "catppuccin-macchiato-mauve": {
         "gtk_theme": "catppuccin-macchiato-mauve-standard+default",
@@ -40,6 +43,7 @@ THEMES: dict[str, dict] = {
         "icon_accent": "cat-macchiato-mauve",
         "kitty_theme": "catppuccin-macchiato-mauve",
         "lsd_theme": "catppuccin-macchiato-mauve",
+        "nvim_theme": "catppuccin-macchiato-mauve",
     },
 }
 

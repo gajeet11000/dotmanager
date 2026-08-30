@@ -18,4 +18,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-vim.cmd.colorscheme("catppuccin-nvim")
+-- Opens an RPC socket per session so `dotmanager theme set` can live-reload
+-- this instance's colorscheme without a restart -- see
+-- core/theme_appliers/nvim_theme.py and lua/config/theme.lua.
+local sockets_dir = vim.fn.stdpath("cache") .. "/dotmanager-sockets"
+vim.fn.mkdir(sockets_dir, "p")
+vim.fn.serverstart(sockets_dir .. "/" .. vim.fn.getpid() .. ".sock")
+
+require("config.theme").apply(require("config.current-theme"))
