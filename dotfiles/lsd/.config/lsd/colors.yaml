@@ -1,0 +1,56 @@
+# lsd color theme -- Catppuccin Macchiato (mauve accent). RGB triples match
+# the palette used in
+# dotfiles/kitty/.config/kitty/themes/catppuccin-macchiato-mauve.conf. Note:
+# lsd hardcodes its directory/file/symlink/device colors (the `file-type`
+# section is not user-configurable), so those aren't set here.
+user: [238, 212, 159]    # yellow
+group: [139, 213, 202]   # teal
+
+permission:
+  read: [166, 218, 149]      # green
+  write: [238, 212, 159]     # yellow
+  exec: [237, 135, 150]      # red
+  exec-sticky: [198, 160, 246] # mauve
+  no-access: [110, 115, 141] # overlay0
+  octal: [139, 213, 202]     # teal
+  acl: [125, 196, 228]       # sapphire
+  context: [125, 196, 228]   # sapphire
+
+attributes:
+  archive: [166, 218, 149]   # green
+  read: [238, 212, 159]      # yellow
+  hidden: [245, 189, 230]    # pink
+  system: [245, 189, 230]    # pink
+
+date:
+  hour-old: [166, 218, 149]  # green
+  day-old: [238, 212, 159]   # yellow
+  older: [110, 115, 141]     # overlay0
+
+size:
+  none: [110, 115, 141]      # overlay0
+  small: [202, 211, 245]     # text
+  medium: [238, 212, 159]    # yellow
+  large: [245, 169, 127]     # peach
+
+inode:
+  valid: [198, 160, 246]     # mauve
+  invalid: [110, 115, 141]   # overlay0
+
+tree-edge: [110, 115, 141]   # overlay0
+
+links:
+  valid: [198, 160, 246]     # mauve
+  invalid: [110, 115, 141]   # overlay0
+
+git-status:
+  default: [110, 115, 141]        # overlay0
+  unmodified: [110, 115, 141]     # overlay0
+  ignored: [110, 115, 141]        # overlay0
+  new-in-index: [166, 218, 149]   # green
+  new-in-workdir: [166, 218, 149] # green
+  typechange: [238, 212, 159]     # yellow
+  deleted: [237, 135, 150]        # red
+  renamed: [166, 218, 149]        # green
+  modified: [238, 212, 159]       # yellow
+  conflicted: [237, 135, 150]     # red

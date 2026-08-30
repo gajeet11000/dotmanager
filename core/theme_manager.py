@@ -13,27 +13,33 @@ THEME_SEARCH_DIRS = [Path("/usr/share/themes"), Path.home() / ".local" / "share"
 # for every app — an applier just skips itself if its key is missing.
 #
 # Current keys: gtk_theme, color_scheme (gtk_theme.py), icon_theme,
-# icon_accent (icon_theme.py). Future: kitty_theme, fish_theme,
-# nvim_colorscheme, yazi_theme, ... — add the key here once its applier
-# exists in core/theme_appliers/.
+# icon_accent (icon_theme.py), kitty_theme (kitty_theme.py), lsd_theme
+# (lsd_theme.py). Future: fish_theme, nvim_colorscheme, yazi_theme, ... —
+# add the key here once its applier exists in core/theme_appliers/.
 THEMES: dict[str, dict] = {
     "gruvbox-dark": {
         "gtk_theme": "Gruvbox-Dark",
         "color_scheme": "prefer-dark",
         "icon_theme": "Papirus-Dark",
         "icon_accent": "orange",
+        "kitty_theme": "gruvbox-dark",
+        "lsd_theme": "gruvbox-dark",
     },
     "gruvbox-light": {
         "gtk_theme": "Gruvbox-Light",
         "color_scheme": "default",
         "icon_theme": "Papirus-Light",
         "icon_accent": "orange",
+        "kitty_theme": "gruvbox-light",
+        "lsd_theme": "gruvbox-light",
     },
     "catppuccin-macchiato-mauve": {
         "gtk_theme": "catppuccin-macchiato-mauve-standard+default",
         "color_scheme": "prefer-dark",
         "icon_theme": "Papirus-Dark",
         "icon_accent": "cat-macchiato-mauve",
+        "kitty_theme": "catppuccin-macchiato-mauve",
+        "lsd_theme": "catppuccin-macchiato-mauve",
     },
 }
 

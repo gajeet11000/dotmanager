@@ -1,0 +1,55 @@
+# lsd color theme -- Gruvbox Dark. RGB triples match the palette used in
+# dotfiles/kitty/.config/kitty/themes/gruvbox-dark.conf. Note: lsd hardcodes
+# its directory/file/symlink/device colors (the `file-type` section is not
+# user-configurable), so those aren't set here.
+user: [250, 189, 47]     # bright yellow
+group: [142, 192, 124]   # bright aqua
+
+permission:
+  read: [184, 187, 38]        # bright green
+  write: [250, 189, 47]       # bright yellow
+  exec: [251, 73, 52]         # bright red
+  exec-sticky: [211, 134, 155] # bright purple
+  no-access: [146, 131, 116]  # grey
+  octal: [142, 192, 124]      # bright aqua
+  acl: [104, 157, 106]        # aqua
+  context: [104, 157, 106]    # aqua
+
+attributes:
+  archive: [184, 187, 38]     # bright green
+  read: [250, 189, 47]        # bright yellow
+  hidden: [211, 134, 155]     # bright purple
+  system: [211, 134, 155]     # bright purple
+
+date:
+  hour-old: [184, 187, 38]    # bright green
+  day-old: [250, 189, 47]     # bright yellow
+  older: [146, 131, 116]      # grey
+
+size:
+  none: [146, 131, 116]       # grey
+  small: [235, 219, 178]      # fg
+  medium: [250, 189, 47]      # bright yellow
+  large: [214, 93, 14]        # orange
+
+inode:
+  valid: [211, 134, 155]      # bright purple
+  invalid: [146, 131, 116]    # grey
+
+tree-edge: [146, 131, 116]    # grey
+
+links:
+  valid: [211, 134, 155]      # bright purple
+  invalid: [146, 131, 116]    # grey
+
+git-status:
+  default: [146, 131, 116]        # grey
+  unmodified: [146, 131, 116]     # grey
+  ignored: [146, 131, 116]        # grey
+  new-in-index: [184, 187, 38]    # bright green
+  new-in-workdir: [184, 187, 38]  # bright green
+  typechange: [250, 189, 47]      # bright yellow
+  deleted: [251, 73, 52]          # bright red
+  renamed: [184, 187, 38]         # bright green
+  modified: [250, 189, 47]        # bright yellow
+  conflicted: [251, 73, 52]       # bright red

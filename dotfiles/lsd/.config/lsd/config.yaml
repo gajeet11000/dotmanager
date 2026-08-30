@@ -1,0 +1,5 @@
+# lsd reads this once to decide where to source its color theme from.
+# "custom" tells it to load colors.yaml in this same directory --
+# see core/theme_appliers/lsd_theme.py, which swaps that file's contents.
+color:
+  theme: custom
