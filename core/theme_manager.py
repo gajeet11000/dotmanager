@@ -45,6 +45,15 @@ THEMES: dict[str, dict] = {
         "lsd_theme": "catppuccin-macchiato-mauve",
         "nvim_theme": "catppuccin-macchiato-mauve",
     },
+    "github-light": {
+        "gtk_theme": "Materia-light",
+        "color_scheme": "default",
+        "icon_theme": "Papirus-Light",
+        "icon_accent": "blue",
+        "kitty_theme": "github-light",
+        "lsd_theme": "github-light",
+        "nvim_theme": "github-light",
+    },
 }
 
 

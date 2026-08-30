@@ -8,6 +8,7 @@ local PROFILES = {
   ["gruvbox-dark"] = { colorscheme = "gruvbox", background = "dark" },
   ["gruvbox-light"] = { colorscheme = "gruvbox", background = "light" },
   ["catppuccin-macchiato-mauve"] = { colorscheme = "catppuccin", background = "dark" },
+  ["github-light"] = { colorscheme = "github_light", background = "light" },
 }
 
 function M.apply(name)

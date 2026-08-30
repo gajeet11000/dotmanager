@@ -29,6 +29,7 @@ COMBOS = [
     ("orange", "Papirus-Dark"),
     ("orange", "Papirus-Light"),
     ("cat-macchiato-mauve", "Papirus-Dark"),
+    ("blue", "Papirus-Light"),
 ]
 
 PLACES_GLOB_DIRS = ["/usr/share/icons/Papirus", "/usr/share/icons/Papirus-Dark", "/usr/share/icons/Papirus-Light"]
