@@ -7,8 +7,8 @@
 export XCURSOR_THEME="Bibata-Rainbow-Modern"
 export XCURSOR_SIZE=24
 
-# GTK theme
-export GTK_THEME="catppuccin-mocha-mauve-standard+default"
+# GTK theme is intentionally not set here — see comment in
+# hypr/configs/environment.lua for why. Use `dotmanager theme set` instead.
 
 # Fonts (optional, tweak to your liking)
 # export GTK_FONT_NAME="JetBrainsMono Nerd Font 11"

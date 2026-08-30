@@ -15,3 +15,8 @@ def setup() -> None:
 
     print("Applying current gsettings via nwg-look -a...")
     shell.run(["nwg-look", "-a"])
+
+    # -a only pushes gsettings/dconf; apps that read settings.ini/gtkrc-2.0/
+    # xsettingsd directly (not through the gsettings/portal path) need -x too.
+    print("Exporting settings.ini / gtkrc-2.0 / xsettingsd via nwg-look -x...")
+    shell.run(["nwg-look", "-x"])

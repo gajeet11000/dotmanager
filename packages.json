@@ -3,8 +3,6 @@
     "dbeaver-ce-jre-bin",
     "zen-browser-bin",
     "visual-studio-code-bin",
-    "bibata-rainbow-cursor-theme",
-    "catppuccin-gtk-theme-mocha",
     "kvantum-theme-catppuccin-git",
     "noisetorch-bin",
     "papirus-folders-catppuccin-git",
@@ -14,7 +12,7 @@
     "waypaper",
     "clipse",
     "stacer-bin",
-    "herdr-bin",
+    "herdr-bin"
   ],
 
   "flatpak": [

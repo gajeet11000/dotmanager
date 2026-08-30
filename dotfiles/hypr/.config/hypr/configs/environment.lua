@@ -13,7 +13,11 @@ hl.env("XCURSOR_SIZE", vars.CURSOR_SIZE)
 hl.env("XCURSOR_THEME", vars.CURSOR_THEME)
 hl.env("HYPRCURSOR_SIZE", vars.CURSOR_SIZE)
 hl.env("HYPRCURSOR_THEME", vars.CURSOR_THEME)
-hl.env("GTK_THEME", vars.GTK_THEME)
+-- GTK_THEME is deliberately NOT exported: setting it hard-pins the theme for
+-- every process's whole lifetime (Hyprland only exports env vars once, at
+-- startup, and can't update them live), which permanently shadows the
+-- org.gnome.desktop.interface gsettings key GTK actually live-reloads from.
+-- Theme switching goes through `dotmanager theme set` instead.
 hl.env("WAYLAND_DISPLAY", "wayland-1")
 
 -- NVIDIA Variables

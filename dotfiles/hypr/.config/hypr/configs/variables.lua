@@ -30,6 +30,5 @@ M.SET_RANDOM_WALLPAPER = "waypaper --random"
 
 M.CURSOR_SIZE = "24"
 M.CURSOR_THEME = "Bibata-Rainbow-Modern"
-M.GTK_THEME = "catppuccin-mocha-mauve-standard+default"
 
 return M

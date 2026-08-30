@@ -8,10 +8,13 @@ from core import (
     installer,
     package_manager,
     stow_manager,
+    theme_manager,
 )
+from core.setups import cursor_theme as cursor_theme_setup
 from core.setups import docker as docker_setup
 from core.setups import fish_shell as fish_setup
 from core.setups import fstab as fstab_setup
+from core.setups import gtk_theme as gtk_theme_setup
 from core.setups import nwg_look as nwg_look_setup
 from core.setups import sddm as sddm_setup
 
@@ -76,6 +79,21 @@ def build_parser() -> argparse.ArgumentParser:
         "--force", action="store_true", help="Skip confirmation prompt"
     )
 
+    # ---- theme ----
+    theme_parser = subparsers.add_parser(
+        "theme", help="Switch the active GTK theme live, no logout needed"
+    )
+    theme_sub = theme_parser.add_subparsers(dest="action", required=True)
+
+    theme_set_action = theme_sub.add_parser(
+        "set", help="Set and live-apply the active GTK theme"
+    )
+    theme_set_action.add_argument(
+        "name", help="Installed theme name, e.g. Gruvbox-Dark (see 'theme list')"
+    )
+
+    theme_sub.add_parser("list", help="List installed GTK theme names")
+
     # ---- setup ----
     setup_parser = subparsers.add_parser(
         "setup", help="Run program-specific setup routines"
@@ -89,7 +107,17 @@ def build_parser() -> argparse.ArgumentParser:
     setup_sub.add_parser(
         "fish", help="Set fish as default shell and apply Catppuccin Mocha theme"
     )
-    setup_sub.add_parser("nwg_look", help="Apply current gsettings via nwg-look -a")
+    setup_sub.add_parser(
+        "nwg_look", help="Apply current gsettings and export config files (nwg-look -a -x)"
+    )
+    setup_sub.add_parser(
+        "gtk_theme",
+        help="Install all bundled GTK themes (assets/gtk-themes/*.zip) system-wide (no AUR rebuild)",
+    )
+    setup_sub.add_parser(
+        "cursor_theme",
+        help="Install Bibata-Rainbow-Modern cursor theme system-wide from the bundled tar.gz (no AUR rebuild)",
+    )
 
     sddm_parser = setup_sub.add_parser(
         "sddm", help="SDDM theme, session, and cursor setup"
@@ -283,6 +311,17 @@ def main() -> None:
             print(f"Error: {e}", file=sys.stderr)
             sys.exit(1)
 
+    elif args.command == "theme":
+        if args.action == "set":
+            try:
+                theme_manager.set_theme(args.name)
+            except ValueError as e:
+                print(f"Error: {e}", file=sys.stderr)
+                sys.exit(1)
+        elif args.action == "list":
+            for name in theme_manager.list_installed():
+                print(f"  {name}")
+
     elif args.command == "setup":
         if args.target == "docker":
             docker_setup.setup()
@@ -292,6 +331,10 @@ def main() -> None:
             fish_setup.setup()
         elif args.target == "nwg_look":
             nwg_look_setup.setup()
+        elif args.target == "gtk_theme":
+            gtk_theme_setup.setup()
+        elif args.target == "cursor_theme":
+            cursor_theme_setup.setup()
         elif args.target == "sddm":
             if args.action == "install":
                 sddm_setup.install_theme()
