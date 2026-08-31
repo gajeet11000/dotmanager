@@ -8,7 +8,8 @@ theme can define only some apps and still be valid.
 
 To add support for a new app (fish, yazi, ...):
   1. Add a module here with an `apply(profile) -> bool` function.
-  2. Add its `apply` to APPLIERS below.
+  2. Add its `apply` to POST_LIVE_APPLIERS below (see PRE_LIVE_APPLIERS'
+     docstring for the one case where it belongs there instead).
   3. Add whatever profile key(s) it reads to the theme(s) in THEMES.
 """
 
@@ -23,9 +24,20 @@ from core.theme_appliers import (
     waybar_theme,
 )
 
-APPLIERS = [
+# gtk_theme and icon_theme don't touch GTK live -- they only write fields
+# into the nwg-look-managed gsettings file core.theme_appliers._nwg_look
+# reads. core.theme_manager.set_theme() pushes that file live (nwg-look
+# -a -x) once, after these two run and before POST_LIVE_APPLIERS.
+PRE_LIVE_APPLIERS = [
     gtk_theme.apply,
     icon_theme.apply,
+]
+
+# Everything else. waybar_theme specifically depends on this ordering:
+# it restarts waybar to force GTK to re-resolve the theme for native
+# widgets it doesn't style itself (the tray's popup menu) -- restarting
+# before the live push would just re-read the *previous* theme.
+POST_LIVE_APPLIERS = [
     kitty_theme.apply,
     lsd_theme.apply,
     nvim_theme.apply,
@@ -33,3 +45,5 @@ APPLIERS = [
     swaync_theme.apply,
     waybar_theme.apply,
 ]
+
+APPLIERS = PRE_LIVE_APPLIERS + POST_LIVE_APPLIERS

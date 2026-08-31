@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from core.theme_appliers import APPLIERS
+from core.theme_appliers import POST_LIVE_APPLIERS, PRE_LIVE_APPLIERS
 from core.theme_appliers._nwg_look import apply_live
 
 # Where GTK themes get installed (see setup gtk_theme); used only to sanity
@@ -8,9 +8,10 @@ from core.theme_appliers._nwg_look import apply_live
 THEME_SEARCH_DIRS = [Path("/usr/share/themes"), Path.home() / ".local" / "share" / "themes"]
 
 # One entry per logical theme. Each maps to a profile of `app_key: value`
-# pairs; core.theme_appliers.APPLIERS is the list of functions that know how
-# to read those keys and apply them. A theme doesn't need every key defined
-# for every app — an applier just skips itself if its key is missing.
+# pairs; core.theme_appliers.PRE_LIVE_APPLIERS/POST_LIVE_APPLIERS are the
+# functions that know how to read those keys and apply them. A theme
+# doesn't need every key defined for every app — an applier just skips
+# itself if its key is missing.
 #
 # Current keys: gtk_theme, color_scheme (gtk_theme.py), icon_theme,
 # icon_accent (icon_theme.py), kitty_theme (kitty_theme.py), lsd_theme
@@ -96,11 +97,14 @@ def set_theme(name: str) -> None:
 
     print(f"Setting theme '{name}'...")
     did_anything = False
-    for applier in APPLIERS:
+    for applier in PRE_LIVE_APPLIERS:
         did_anything |= applier(profile)
 
     if did_anything:
         print("Applying live via nwg-look -a -x...")
         apply_live()
+
+    for applier in POST_LIVE_APPLIERS:
+        did_anything |= applier(profile)
 
     print(f"Done. '{name}' is now active.")
