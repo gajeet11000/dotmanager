@@ -1,45 +1,47 @@
 /*
-* waybar palette -- Catppuccin Macchiato (mauve accent). This is the real
-* official Macchiato palette (the old mocha.css this replaces was
-* actually the wrong flavour -- Mocha, not Macchiato). `mauve` is the
-* accent, matching kitty's active_border_color.
+* waybar palette -- GitHub Light. Role names match the Catppuccin
+* convention style.css already uses; values match dotfiles/kitty and
+* dotfiles/rofi's github-light palette. `mauve` is the accent, matching
+* kitty's active_border_color. `flamingo` is a light blue (not neutral
+* near-white) for the same reason as rofi's palette -- see the comment
+* in dotfiles/rofi/.config/rofi/colors/github-light.rasi.
 *
 * mainbar-bg-1/2/3 are the three gradient stops for .mainbar's glass
-* background -- shared with gruvbox-dark.css (a uniform "deep blue
-* glass" look across dark themes), high-alpha to minimize see-through.
+* background -- shared with gruvbox-light.css (a uniform "white glass"
+* look across light themes), high-alpha to minimize see-through.
 */
 
-@define-color mainbar-bg-1 rgba(10, 16, 42, 0.88);
-@define-color mainbar-bg-2 rgba(14, 22, 48, 0.90);
-@define-color mainbar-bg-3 rgba(8, 13, 36, 0.85);
+@define-color mainbar-bg-1 rgba(255, 255, 255, 0.83);
+@define-color mainbar-bg-2 rgba(250, 250, 252, 0.85);
+@define-color mainbar-bg-3 rgba(245, 246, 248, 0.80);
 
-@define-color base #24273a;
-@define-color mantle #1e2030;
-@define-color crust #181926;
+@define-color base #ffffff;
+@define-color mantle #f6f8fa;
+@define-color crust #eaeef2;
 
-@define-color text #cad3f5;
-@define-color subtext0 #a5adcb;
-@define-color subtext1 #b8c0e0;
+@define-color text #24292f;
+@define-color subtext0 #6e7781;
+@define-color subtext1 #57606a;
 
-@define-color surface0 #363a4f;
-@define-color surface1 #494d64;
-@define-color surface2 #5b6078;
+@define-color surface0 #f6f8fa;
+@define-color surface1 #eaeef2;
+@define-color surface2 #d0d7de;
 
-@define-color overlay0 #6e738d;
-@define-color overlay1 #8087a2;
-@define-color overlay2 #939ab7;
+@define-color overlay0 #8c959f;
+@define-color overlay1 #8c959f;
+@define-color overlay2 #6e7781;
 
-@define-color blue #8aadf4;
-@define-color lavender #b7bdf8;
-@define-color sapphire #7dc4e4;
-@define-color sky #91d7e3;
-@define-color teal #8bd5ca;
-@define-color green #a6da95;
-@define-color yellow #eed49f;
-@define-color peach #f5a97f;
-@define-color maroon #ee99a0;
-@define-color red #ed8796;
-@define-color mauve #c6a0f6;
-@define-color pink #f5bde6;
-@define-color flamingo #f0c6c6;
-@define-color rosewater #f4dbd6;
+@define-color blue #0969da;
+@define-color lavender #a475f9;
+@define-color sapphire #218bff;
+@define-color sky #3192aa;
+@define-color teal #1b7c83;
+@define-color green #116329;
+@define-color yellow #4d2d00;
+@define-color peach #9a6700;
+@define-color maroon #a40e26;
+@define-color red #cf222e;
+@define-color mauve #0969da;
+@define-color pink #8250df;
+@define-color flamingo #54aeff;
+@define-color rosewater #f6f8fa;

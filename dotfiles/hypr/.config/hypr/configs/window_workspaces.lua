@@ -255,8 +255,12 @@ hl.layer_rule({
 })
 
 hl.layer_rule({
+    -- config.jsonc sets "name"/"id" to "mainbar", so that's the actual
+    -- Wayland layer-shell namespace waybar registers under (verified via
+    -- `hyprctl layers -j`) -- "waybar" here never matched anything, so
+    -- blur was never actually being applied to the bar.
     match = {
-        namespace = "waybar",
+        namespace = "mainbar",
     },
     blur = true,
     ignore_alpha = 0.5,

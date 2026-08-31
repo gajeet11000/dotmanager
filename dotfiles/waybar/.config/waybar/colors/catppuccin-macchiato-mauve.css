@@ -9,9 +9,9 @@
 * glass" look across dark themes), high-alpha to minimize see-through.
 */
 
-@define-color mainbar-bg-1 rgba(10, 16, 42, 0.88);
-@define-color mainbar-bg-2 rgba(14, 22, 48, 0.90);
-@define-color mainbar-bg-3 rgba(8, 13, 36, 0.85);
+@define-color mainbar-bg-1 rgba(22, 30, 58, 0.83);
+@define-color mainbar-bg-2 rgba(28, 38, 66, 0.85);
+@define-color mainbar-bg-3 rgba(18, 24, 50, 0.80);
 
 @define-color base #24273a;
 @define-color mantle #1e2030;

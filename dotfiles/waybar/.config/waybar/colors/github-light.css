@@ -11,7 +11,7 @@
 * look across light themes), high-alpha to minimize see-through.
 */
 
-@define-color mainbar-bg-1 rgba(255, 255, 255, 0.82);
+@define-color mainbar-bg-1 rgba(255, 255, 255, 0.83);
 @define-color mainbar-bg-2 rgba(250, 250, 252, 0.85);
 @define-color mainbar-bg-3 rgba(245, 246, 248, 0.80);
 
