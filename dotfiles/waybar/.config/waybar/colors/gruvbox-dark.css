@@ -1,0 +1,47 @@
+/*
+* waybar palette -- Gruvbox Dark. Role names match the Catppuccin
+* convention style.css already uses (kept for compatibility with the
+* existing module rules); values match dotfiles/kitty and dotfiles/rofi's
+* gruvbox-dark palette. `mauve` is the accent, matching kitty's
+* active_border_color.
+*
+* mainbar-bg-1/2/3 are the three gradient stops for .mainbar's glass
+* background -- shared with catppuccin-macchiato-mauve.css (a uniform
+* "deep blue glass" look across dark themes), high-alpha to minimize
+* see-through.
+*/
+
+@define-color mainbar-bg-1 rgba(10, 16, 42, 0.88);
+@define-color mainbar-bg-2 rgba(14, 22, 48, 0.90);
+@define-color mainbar-bg-3 rgba(8, 13, 36, 0.85);
+
+@define-color base #282828;
+@define-color mantle #1d2021;
+@define-color crust #1d2021;
+
+@define-color text #ebdbb2;
+@define-color subtext0 #bdae93;
+@define-color subtext1 #d5c4a1;
+
+@define-color surface0 #3c3836;
+@define-color surface1 #504945;
+@define-color surface2 #665c54;
+
+@define-color overlay0 #7c6f64;
+@define-color overlay1 #928374;
+@define-color overlay2 #a89984;
+
+@define-color blue #83a598;
+@define-color lavender #d3869b;
+@define-color sapphire #458588;
+@define-color sky #8ec07c;
+@define-color teal #8ec07c;
+@define-color green #b8bb26;
+@define-color yellow #fabd2f;
+@define-color peach #fe8019;
+@define-color maroon #cc241d;
+@define-color red #fb4934;
+@define-color mauve #d79921;
+@define-color pink #d3869b;
+@define-color flamingo #fe8019;
+@define-color rosewater #d65d0e;

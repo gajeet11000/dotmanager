@@ -1,4 +1,6 @@
-@import "./mocha.css";
+/* Swapped by `dotmanager theme set` -- see
+   core/theme_appliers/waybar_theme.py and colors/current.css. */
+@import "./colors/current.css";
 
 * {
   font-family: "CaskaydiaCove NF";
@@ -11,10 +13,13 @@
 
 .mainbar {
   border-radius: 12px;
-  background: linear-gradient(135deg,  
-    rgba(8, 15, 40, 0.70) 20%,  
-    rgba(12, 20, 45, 0.72) 50%,  
-    rgba(6, 12, 35, 0.60) 100%
+  /* Gradient stops come from colors/current.css -- deep blue glass for
+     dark themes, white glass for light themes. High alpha (see those
+     files) so this reads as frosted glass, not plain transparency. */
+  background: linear-gradient(135deg,
+    @mainbar-bg-1 20%,
+    @mainbar-bg-2 50%,
+    @mainbar-bg-3 100%
   );
   transition: background 1s ease;
 }
@@ -89,6 +94,13 @@
 
 #tray {
   color: @sapphire;
+  /* Pin the systray to a fixed icon theme regardless of the system-wide
+     icon-theme setting (which flips Papirus-Dark/Papirus-Light per
+     light/dark theme). Tray icons are drawn by whatever app owns them
+     and often resolve symbolic icon names against that global setting
+     -- when it's Papirus-Light, icons meant for a light background
+     render dark and nearly disappear against this bar. */
+  -gtk-icon-theme: "Papirus-Dark";
 }
 
 #tray > .passive {

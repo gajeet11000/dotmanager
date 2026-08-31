@@ -12,7 +12,16 @@ To add support for a new app (fish, yazi, ...):
   3. Add whatever profile key(s) it reads to the theme(s) in THEMES.
 """
 
-from core.theme_appliers import gtk_theme, icon_theme, kitty_theme, lsd_theme, nvim_theme, rofi_theme, swaync_theme
+from core.theme_appliers import (
+    gtk_theme,
+    icon_theme,
+    kitty_theme,
+    lsd_theme,
+    nvim_theme,
+    rofi_theme,
+    swaync_theme,
+    waybar_theme,
+)
 
 APPLIERS = [
     gtk_theme.apply,
@@ -22,4 +31,5 @@ APPLIERS = [
     nvim_theme.apply,
     rofi_theme.apply,
     swaync_theme.apply,
+    waybar_theme.apply,
 ]
