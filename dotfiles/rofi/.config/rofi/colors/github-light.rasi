@@ -1,0 +1,42 @@
+/* rofi color palette -- GitHub Light. `mauve` (the accent used for the
+   selected-item highlight) matches active_border_color in
+   dotfiles/kitty/.config/kitty/themes/github-light.conf for cross-app
+   consistency. GitHub's own palette doesn't have as many distinct hues
+   as Catppuccin's, so a few roles below reuse the nearest equivalent
+   (e.g. `pink`/`lavender` fall back to GitHub's purple).
+
+   `flamingo` is deliberately a light *blue* (Primer's blue.4, #54aeff)
+   rather than a neutral near-white: foreground-selected is var(base),
+   which is white here, and the gradient runs flamingo -> mauve. A
+   neutral near-white flamingo put white text on a near-white start of
+   the gradient (invisible); staying inside the blue family keeps it
+   dark enough for white text at both ends. */
+* {
+  flamingo-mauve-gradient: linear-gradient(45deg, #54aeff, #0969da);
+  rosewater 	: rgba(246, 248, 250, 1.0);
+  flamingo 	: rgba(84, 174, 255, 1.0);
+  pink 	: rgba(130, 80, 223, 1.0);
+  mauve 	: rgba(9, 105, 218, 1.0);
+  red 	: rgba(207, 34, 46, 1.0);
+  maroon 	: rgba(164, 14, 38, 1.0);
+  peach 	: rgba(154, 103, 0, 1.0);
+  yellow 	: rgba(77, 45, 0, 1.0);
+  green 	: rgba(17, 99, 41, 1.0);
+  teal 	: rgba(27, 124, 131, 1.0);
+  sky 	: rgba(49, 146, 170, 1.0);
+  sapphire 	: rgba(33, 139, 255, 1.0);
+  blue 	: rgba(9, 105, 218, 1.0);
+  lavender 	: rgba(164, 117, 249, 1.0);
+  text 	: rgba(36, 41, 47, 1.0);
+  subtext1 	: rgba(87, 96, 106, 1.0);
+  subtext0 	: rgba(110, 119, 129, 1.0);
+  overlay2 	: rgba(110, 119, 129, 1.0);
+  overlay1 	: rgba(140, 149, 159, 1.0);
+  overlay0 	: rgba(140, 149, 159, 1.0);
+  surface2 	: rgba(208, 215, 222, 1.0);
+  surface1 	: rgba(234, 238, 242, 1.0);
+  surface0 	: rgba(246, 248, 250, 1.0);
+  base 	: rgba(255, 255, 255, 1.0);
+  mantle 	: rgba(246, 248, 250, 1.0);
+  crust 	: rgba(234, 238, 242, 1.0);
+}
