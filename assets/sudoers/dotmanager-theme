@@ -1,0 +1,17 @@
+# Lets `dotmanager theme set` apply icon accent colors without a password
+# prompt when it runs somewhere with no terminal attached (the rofi theme
+# switcher's keybind, for instance) -- see core/theme_appliers/icon_theme.py.
+#
+# Scoped to exactly the commands that step runs: extracting a .tar already
+# inside this repo's assets/icon-themes/, and rebuilding the icon cache for
+# exactly Papirus-Dark/Papirus-Light. Doesn't grant anything a user who
+# already owns this repo's files couldn't already do.
+#
+# Install with: sudo install -m 0440 assets/sudoers/dotmanager-theme /etc/sudoers.d/dotmanager-theme
+# (then sudo visudo -c to verify it parses before trusting it)
+#
+# Adjust the username and repo path below if either differs from a fresh
+# clone at ~/Projects/dotmanager.
+gajeet ALL=(root) NOPASSWD: /usr/bin/tar -xf /home/gajeet/Projects/dotmanager/assets/icon-themes/*.tar -C /
+gajeet ALL=(root) NOPASSWD: /usr/bin/gtk-update-icon-cache -qf /usr/share/icons/Papirus-Dark
+gajeet ALL=(root) NOPASSWD: /usr/bin/gtk-update-icon-cache -qf /usr/share/icons/Papirus-Light
