@@ -23,6 +23,7 @@ M.BRIGHTNESS = M.SCRIPTS_DIR .. "/Brightness.sh"
 M.SCRATCHPAD = M.SCRIPTS_DIR .. "/scratchpads.sh"
 M.WINDOW_SWITCHER = M.SCRIPTS_DIR .. "/window_switcher.sh"
 M.LOGOUT = M.SCRIPTS_DIR .. "/rofi-power-menu.sh"
+M.THEME_SWITCHER = M.SCRIPTS_DIR .. "/rofi-theme-switcher.sh"
 
 M.TOGGLE_NOTIFICATION_CENTER = "swaync-client -t"
 M.SCREENSHOT = "env XDG_CURRENT_DESKTOP=Sway flameshot gui"

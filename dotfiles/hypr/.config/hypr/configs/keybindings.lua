@@ -18,6 +18,7 @@ hl.bind(SUPER .. "+A", hl.dsp.exec_cmd(vars.FILE_MANAGER .. " " .. vars.STORAGE_
 hl.bind(SUPER .. "+B", hl.dsp.exec_cmd(vars.BROWSER))
 hl.bind(SUPER .. "+SPACE", hl.dsp.exec_cmd(vars.LAUNCHER))
 hl.bind(SUPER_SHIFT .. "+Q", hl.dsp.exec_cmd(vars.LOGOUT))
+hl.bind(SUPER_SHIFT .. "+T", hl.dsp.exec_cmd(vars.THEME_SWITCHER))
 hl.bind(SUPER_CTRL .. "+W", hl.dsp.exec_cmd(vars.RELOAD_WAYBAR))
 hl.bind("Print", hl.dsp.exec_cmd(vars.SCREENSHOT))
 hl.bind(SUPER .. "+P", hl.dsp.exec_cmd(vars.SCREENSHOT))
