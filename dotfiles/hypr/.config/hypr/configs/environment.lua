@@ -38,10 +38,14 @@ hl.env("XDG_SESSION_DESKTOP", "sway")
 hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
--- "qt5ct", not "qt6ct": Qt5 apps only look for a platform theme plugin
--- literally named "qt5ct" (that's qt5ct's own plugin's only registered
--- name), while qt6ct's plugin registers itself under *both* "qt6ct" and
--- "qt5ct" (verified via `strings` on libqt6ct.so) for exactly this
--- reason -- one shared value here satisfies both Qt5 and Qt6 apps, each
--- reading its own qt{5,6}ct.conf. See core/theme_appliers/qt_theme.py.
-hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+-- Qt5 and Qt6 apps each need a *different* value here -- there's no
+-- single one that covers both. Qt6 apps get "hyprqt6engine": qt6ct
+-- can't apply KIconEngine's ColorScheme-Text substitution (confirmed by
+-- reading hyprqt6engine's own source -- qt6ct doesn't link KIconThemes
+-- at all), so KDE apps' symbolic action icons (zoom-in, zoom-out, ...)
+-- stayed unthemed under qt6ct even with everything else (Kvantum,
+-- kdeglobals) correctly configured. hyprqt6engine has no Qt5 build, so
+-- this specific value leaves Qt5 apps without platform-theme
+-- integration -- an accepted tradeoff, since nothing Qt5 is in daily
+-- use here. See core/theme_appliers/qt_theme.py.
+hl.env("QT_QPA_PLATFORMTHEME", "hyprqt6engine")
