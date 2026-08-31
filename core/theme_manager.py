@@ -16,8 +16,9 @@ THEME_SEARCH_DIRS = [Path("/usr/share/themes"), Path.home() / ".local" / "share"
 # Current keys: gtk_theme, color_scheme, icon_theme, icon_accent (all set
 # explicitly per theme below -- these are the ones that genuinely differ
 # per app) plus kitty_theme, lsd_theme, nvim_theme, swaync_theme,
-# rofi_theme, waybar_theme, herdr_theme, claude_theme (every one of these
-# always equals the theme's own name -- see _SLUG_KEYS/_profile below).
+# rofi_theme, waybar_theme, herdr_theme, claude_theme, qt_theme (every one
+# of these always equals the theme's own name -- see _SLUG_KEYS/_profile
+# below).
 # Future app: if its applier can just reuse the theme name as-is, add it
 # to _SLUG_KEYS; if it needs its own per-theme value instead, add it as
 # an explicit argument to _profile() like gtk_theme/icon_accent are.
@@ -30,6 +31,7 @@ _SLUG_KEYS = [
     "waybar_theme",
     "herdr_theme",
     "claude_theme",
+    "qt_theme",
 ]
 
 

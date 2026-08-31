@@ -38,6 +38,10 @@ hl.env("XDG_SESSION_DESKTOP", "sway")
 hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-
--- hl.env("QT_STYLE_OVERRIDE", "kvantum")
+-- "qt5ct", not "qt6ct": Qt5 apps only look for a platform theme plugin
+-- literally named "qt5ct" (that's qt5ct's own plugin's only registered
+-- name), while qt6ct's plugin registers itself under *both* "qt6ct" and
+-- "qt5ct" (verified via `strings` on libqt6ct.so) for exactly this
+-- reason -- one shared value here satisfies both Qt5 and Qt6 apps, each
+-- reading its own qt{5,6}ct.conf. See core/theme_appliers/qt_theme.py.
+hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")

@@ -21,6 +21,7 @@ from core.theme_appliers import (
     kitty_theme,
     lsd_theme,
     nvim_theme,
+    qt_theme,
     rofi_theme,
     swaync_theme,
     waybar_theme,
@@ -48,6 +49,7 @@ POST_LIVE_APPLIERS = [
     waybar_theme.apply,
     herdr_theme.apply,
     claude_theme.apply,
+    qt_theme.apply,
 ]
 
 APPLIERS = PRE_LIVE_APPLIERS + POST_LIVE_APPLIERS

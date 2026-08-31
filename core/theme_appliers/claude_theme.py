@@ -22,44 +22,11 @@ decorative internal-only tokens (rainbow_*, clawd_*).
 import json
 from pathlib import Path
 
+from core.theme_appliers._palette import PALETTES, mix as _mix
+
 THEMES_DIR = Path.home() / ".claude" / "themes"
 THEME_FILE = THEMES_DIR / "dotmanager.json"
 SETTINGS_FILE = Path.home() / ".claude" / "settings.json"
-
-# Base palette per profile, reusing the exact hex already established for
-# kitty/lsd/rofi/waybar/herdr. `base` picks Claude's own dark/light preset
-# to fall through to for any of the 72 tokens this file doesn't override.
-PALETTES = {
-    "gruvbox-dark": {
-        "base": "dark",
-        "bg": "#282828", "fg": "#ebdbb2", "accent": "#d79921", "muted": "#7c6f64",
-        "red": "#fb4934", "green": "#b8bb26", "yellow": "#fabd2f", "blue": "#83a598",
-        "purple": "#d3869b", "cyan": "#8ec07c", "orange": "#fe8019",
-        "selection_bg": "#504945",
-    },
-    "catppuccin-macchiato-mauve": {
-        "base": "dark",
-        "bg": "#24273a", "fg": "#cad3f5", "accent": "#c6a0f6", "muted": "#6e738d",
-        "red": "#ed8796", "green": "#a6da95", "yellow": "#eed49f", "blue": "#8aadf4",
-        "purple": "#c6a0f6", "cyan": "#8bd5ca", "orange": "#f5a97f",
-        "selection_bg": "#494d64",
-    },
-    "github-light": {
-        "base": "light",
-        "bg": "#ffffff", "fg": "#24292f", "accent": "#0969da", "muted": "#8c959f",
-        "red": "#cf222e", "green": "#116329", "yellow": "#4d2d00", "blue": "#0969da",
-        "purple": "#8250df", "cyan": "#1b7c83", "orange": "#9a6700",
-        "selection_bg": "#eaeef2",
-    },
-}
-
-
-def _mix(hex_a: str, hex_b: str, fraction: float) -> str:
-    """hex_a blended `fraction` of the way toward hex_b."""
-    a = [int(hex_a[i : i + 2], 16) for i in (1, 3, 5)]
-    b = [int(hex_b[i : i + 2], 16) for i in (1, 3, 5)]
-    mixed = [round(x + (y - x) * fraction) for x, y in zip(a, b)]
-    return "#" + "".join(f"{v:02x}" for v in mixed)
 
 
 def _build_overrides(p: dict) -> dict:
