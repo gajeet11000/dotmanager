@@ -13,70 +13,66 @@ THEME_SEARCH_DIRS = [Path("/usr/share/themes"), Path.home() / ".local" / "share"
 # doesn't need every key defined for every app — an applier just skips
 # itself if its key is missing.
 #
-# Current keys: gtk_theme, color_scheme (gtk_theme.py), icon_theme,
-# icon_accent (icon_theme.py), kitty_theme (kitty_theme.py), lsd_theme
-# (lsd_theme.py), nvim_theme (nvim_theme.py), swaync_theme
-# (swaync_theme.py), rofi_theme (rofi_theme.py), waybar_theme
-# (waybar_theme.py), herdr_theme (herdr_theme.py), claude_theme
-# (claude_theme.py). Future: fish_theme, yazi_theme, ... — add the key
-# here once its applier exists in core/theme_appliers/.
+# Current keys: gtk_theme, color_scheme, icon_theme, icon_accent (all set
+# explicitly per theme below -- these are the ones that genuinely differ
+# per app) plus kitty_theme, lsd_theme, nvim_theme, swaync_theme,
+# rofi_theme, waybar_theme, herdr_theme, claude_theme (every one of these
+# always equals the theme's own name -- see _SLUG_KEYS/_profile below).
+# Future app: if its applier can just reuse the theme name as-is, add it
+# to _SLUG_KEYS; if it needs its own per-theme value instead, add it as
+# an explicit argument to _profile() like gtk_theme/icon_accent are.
+_SLUG_KEYS = [
+    "kitty_theme",
+    "lsd_theme",
+    "nvim_theme",
+    "swaync_theme",
+    "rofi_theme",
+    "waybar_theme",
+    "herdr_theme",
+    "claude_theme",
+]
+
+
+def _profile(name: str, *, gtk_theme: str, color_scheme: str, icon_theme: str, icon_accent: str) -> dict:
+    profile = {
+        "gtk_theme": gtk_theme,
+        "color_scheme": color_scheme,
+        "icon_theme": icon_theme,
+        "icon_accent": icon_accent,
+    }
+    profile.update(dict.fromkeys(_SLUG_KEYS, name))
+    return profile
+
+
 THEMES: dict[str, dict] = {
-    "gruvbox-dark": {
-        "gtk_theme": "Gruvbox-Dark",
-        "color_scheme": "prefer-dark",
-        "icon_theme": "Papirus-Dark",
-        "icon_accent": "orange",
-        "kitty_theme": "gruvbox-dark",
-        "lsd_theme": "gruvbox-dark",
-        "nvim_theme": "gruvbox-dark",
-        "swaync_theme": "gruvbox-dark",
-        "rofi_theme": "gruvbox-dark",
-        "waybar_theme": "gruvbox-dark",
-        "herdr_theme": "gruvbox-dark",
-        "claude_theme": "gruvbox-dark",
-    },
-    "gruvbox-light": {
-        "gtk_theme": "Gruvbox-Light",
-        "color_scheme": "default",
-        "icon_theme": "Papirus-Light",
-        "icon_accent": "orange",
-        "kitty_theme": "gruvbox-light",
-        "lsd_theme": "gruvbox-light",
-        "nvim_theme": "gruvbox-light",
-        "swaync_theme": "gruvbox-light",
-        "rofi_theme": "gruvbox-light",
-        "waybar_theme": "gruvbox-light",
-        "herdr_theme": "gruvbox-light",
-        "claude_theme": "gruvbox-light",
-    },
-    "catppuccin-macchiato-mauve": {
-        "gtk_theme": "catppuccin-macchiato-mauve-standard+default",
-        "color_scheme": "prefer-dark",
-        "icon_theme": "Papirus-Dark",
-        "icon_accent": "cat-macchiato-mauve",
-        "kitty_theme": "catppuccin-macchiato-mauve",
-        "lsd_theme": "catppuccin-macchiato-mauve",
-        "nvim_theme": "catppuccin-macchiato-mauve",
-        "swaync_theme": "catppuccin-macchiato-mauve",
-        "rofi_theme": "catppuccin-macchiato-mauve",
-        "waybar_theme": "catppuccin-macchiato-mauve",
-        "herdr_theme": "catppuccin-macchiato-mauve",
-        "claude_theme": "catppuccin-macchiato-mauve",
-    },
-    "github-light": {
-        "gtk_theme": "Materia-light",
-        "color_scheme": "default",
-        "icon_theme": "Papirus-Light",
-        "icon_accent": "blue",
-        "kitty_theme": "github-light",
-        "lsd_theme": "github-light",
-        "nvim_theme": "github-light",
-        "swaync_theme": "github-light",
-        "rofi_theme": "github-light",
-        "waybar_theme": "github-light",
-        "herdr_theme": "github-light",
-        "claude_theme": "github-light",
-    },
+    "gruvbox-dark": _profile(
+        "gruvbox-dark",
+        gtk_theme="Gruvbox-Dark",
+        color_scheme="prefer-dark",
+        icon_theme="Papirus-Dark",
+        icon_accent="orange",
+    ),
+    "gruvbox-light": _profile(
+        "gruvbox-light",
+        gtk_theme="Gruvbox-Light",
+        color_scheme="default",
+        icon_theme="Papirus-Light",
+        icon_accent="orange",
+    ),
+    "catppuccin-macchiato-mauve": _profile(
+        "catppuccin-macchiato-mauve",
+        gtk_theme="catppuccin-macchiato-mauve-standard+default",
+        color_scheme="prefer-dark",
+        icon_theme="Papirus-Dark",
+        icon_accent="cat-macchiato-mauve",
+    ),
+    "github-light": _profile(
+        "github-light",
+        gtk_theme="Materia-light",
+        color_scheme="default",
+        icon_theme="Papirus-Light",
+        icon_accent="blue",
+    ),
 }
 
 

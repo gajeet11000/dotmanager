@@ -13,6 +13,16 @@ Two independent mechanisms live here:
     Baking once (fixing the bug in the process) and restoring a snapshot
     sidesteps both: it's just a fast tar extract + one targeted cache
     rebuild, fast enough to run synchronously.
+
+Both the tar extract and the cache rebuild need root. When `theme set`
+runs from an interactive terminal, sudo can just prompt. When it runs
+from somewhere with no terminal attached -- the rofi theme switcher's
+keybind, for instance -- there's nothing to prompt, so it needs a
+NOPASSWD sudoers rule for these exact commands (see
+/etc/sudoers.d/dotmanager-theme). That rule is scoped to extracting
+.tar files already inside this repo's assets/icon-themes/ and rebuilding
+the cache for exactly Papirus-Dark/Papirus-Light -- it doesn't grant
+anything a user who already owns this repo's files couldn't already do.
 """
 
 from pathlib import Path
