@@ -1,6 +1,8 @@
 """Generates a Kvantum theme (widget/window painting) from a raw hex
 palette -- the piece that actually reaches KDE-Frameworks apps' widget
 colors, since qt6ct/hyprqt6engine's own QPalette gets ignored by them.
+hyprtheme's `qt` applier just copies this output into place at switch
+time, it doesn't regenerate it.
 
 A theme's SVG must match its own light/dark polarity -- reusing a
 dark-sourced SVG for a light palette renders the window background wrong
@@ -17,7 +19,7 @@ below; structure/geometry/widget-state settings untouched.
 import shutil
 from pathlib import Path
 
-from hyprtheme.appliers._palette import luminance, mix
+from hyprtheme_build.palette import luminance, mix
 
 
 def build_tokens(p: dict) -> dict:
@@ -45,19 +47,15 @@ def _render_kvconfig(template_file: Path, p: dict) -> str:
     return text
 
 
-def write_theme(
-    kvantum_dir: Path, base_svg: dict[str, Path], template_file: Path,
+def render_theme(
+    output_dir: Path, base_svg: dict[str, Path], template_file: Path,
     theme_name: str, palette: dict,
-) -> None:
-    """Generate `<kvantum_dir>/<theme_name>/` for this palette."""
-    theme_dir = kvantum_dir / theme_name
+) -> Path:
+    """Generate `<output_dir>/<theme_name>/` for this palette. Returns the
+    theme's directory."""
+    theme_dir = output_dir / theme_name
     theme_dir.mkdir(parents=True, exist_ok=True)
 
     (theme_dir / f"{theme_name}.kvconfig").write_text(_render_kvconfig(template_file, palette))
     shutil.copyfile(base_svg[palette["base"]], theme_dir / f"{theme_name}.svg")
-
-
-def select_theme(kvantum_dir: Path, theme_name: str) -> None:
-    """Point `<kvantum_dir>/kvantum.kvconfig` at this theme."""
-    kvantum_dir.mkdir(parents=True, exist_ok=True)
-    (kvantum_dir / "kvantum.kvconfig").write_text(f"[General]\ntheme={theme_name}\n")
+    return theme_dir

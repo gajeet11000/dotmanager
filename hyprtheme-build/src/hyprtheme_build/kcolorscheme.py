@@ -13,7 +13,7 @@ Section/key names and the overall shape follow the standard KDE Plasma
 
 from pathlib import Path
 
-from hyprtheme.appliers._palette import luminance, mix
+from hyprtheme_build.palette import luminance, mix
 
 
 def _rgb(hex_color: str) -> str:
@@ -82,9 +82,9 @@ def _render(name: str, p: dict) -> str:
     )
 
 
-def write_scheme(schemes_dir: Path, theme_name: str, palette: dict) -> Path:
-    """Generate `<schemes_dir>/<theme_name>.colors`, returning its path."""
-    schemes_dir.mkdir(parents=True, exist_ok=True)
-    path = schemes_dir / f"{theme_name}.colors"
+def write_scheme(output_dir: Path, theme_name: str, palette: dict) -> Path:
+    """Generate `<output_dir>/<theme_name>.colors`, returning its path."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    path = output_dir / f"{theme_name}.colors"
     path.write_text(_render(theme_name, palette))
     return path

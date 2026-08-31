@@ -70,11 +70,9 @@ pointer_format = "-- Rewritten by hyprtheme on `dotmanager theme set`.\nreturn \
 kind = "plugin"
 plugin = "qt"
 kvantum_dir = "~/.config/Kvantum"
-base_svg_dark = "~/Projects/dotmanager/assets/kvantum/base-dark.svg"
-base_svg_light = "~/Projects/dotmanager/assets/kvantum/base-light.svg"
-kvconfig_template = "~/Projects/dotmanager/assets/kvantum/base.kvconfig.template"
+generated_kvantum_dir = "~/Projects/dotmanager/assets/generated/kvantum"
 kdeglobals = "~/.config/kdeglobals"
-color_schemes_dir = "~/.local/share/color-schemes"
+generated_colors_dir = "~/Projects/dotmanager/assets/generated/color-schemes"
 platform_engine_conf = "~/.config/hypr/hyprqt6engine.conf"
 style = "kvantum"
 

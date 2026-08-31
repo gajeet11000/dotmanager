@@ -5,6 +5,7 @@ requires-python = ">=3.13"
 [manifest]
 members = [
     "hyprtheme",
+    "hyprtheme-build",
     "stow-dotfiles",
 ]
 
@@ -14,12 +15,27 @@ version = "0.1.0"
 source = { editable = "hyprtheme" }
 
 [[package]]
-name = "stow-dotfiles"
+name = "hyprtheme-build"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "hyprtheme-build" }
 dependencies = [
     { name = "hyprtheme" },
 ]
 
 [package.metadata]
 requires-dist = [{ name = "hyprtheme", editable = "hyprtheme" }]
+
+[[package]]
+name = "stow-dotfiles"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "hyprtheme" },
+    { name = "hyprtheme-build" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hyprtheme", editable = "hyprtheme" },
+    { name = "hyprtheme-build", editable = "hyprtheme-build" },
+]

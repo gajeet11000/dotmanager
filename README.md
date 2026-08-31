@@ -19,6 +19,8 @@ cd ~/Projects/dotmanager
 # is built on (see hyprtheme/ below) -- uv installs it editable via the
 # workspace member entry in this repo's own pyproject.toml. Every command
 # below assumes `uv run`, or an activated `.venv`, for this reason.
+# (hyprtheme-build, the separate theme-asset generator, is also a workspace
+# member but is only needed when adding a new theme -- see below.)
 uv sync
 
 # 2. Packages (pacman + AUR + Flatpak, from packages.json)
@@ -77,6 +79,40 @@ uv run python3 main.py stow restow <pkg>     # re-link a package after editing d
 uv run python3 main.py manage add <pkg>      # add a package to packages.json (name | name/aur | name/flatpak)
 ```
 
+## Adding a new theme
+
+No Python required. Repeat the pattern in an existing `assets/themes/*.toml`
+file:
+
+1. Pick a GTK theme and confirm it's installed (`/usr/share/themes/<name>/`
+   or `~/.local/share/themes/<name>/`) -- `setup gtk_theme` installs the
+   bundled ones in `assets/gtk-themes/`, or install your own separately.
+2. Write `assets/themes/<name>.toml`: one `<app>_theme` line per app under
+   `[apps]` (copy an existing theme file as a template), plus a `[palette]`
+   table of hex colors.
+3. If the theme's `icon_accent` isn't already baked, add the
+   `(accent, icon_theme)` pair to `scripts/bake_icon_accents.py`'s `COMBOS`
+   and run it once: `uv run python3 scripts/bake_icon_accents.py` (needs
+   sudo).
+4. Build the theme's Kvantum + KDE `.colors` files -- a one-time step, not
+   something `theme set` redoes on every switch, using the separate
+   `hyprtheme-build` package (see hyprtheme's README for why it's separate):
+   ```sh
+   uv run hyprtheme-build qt assets/themes/<name>.toml \
+     --base-svg-dark    assets/kvantum/base-dark.svg \
+     --base-svg-light   assets/kvantum/base-light.svg \
+     --kvconfig-template assets/kvantum/base.kvconfig.template \
+     --kvantum-out      assets/generated/kvantum \
+     --colors-out       assets/generated/color-schemes
+   ```
+5. `uv run python3 main.py theme set <name>` to verify.
+6. Commit `assets/themes/<name>.toml` together with the
+   `assets/generated/kvantum/hyprtheme-<name>/` and
+   `assets/generated/color-schemes/hyprtheme-<name>.colors` step 4 wrote.
+
+To remove a theme: delete its `assets/themes/<name>.toml` and, if present,
+its `assets/generated/` output.
+
 ## Layout
 
 - `dotfiles/<package>/` -- one GNU Stow package per app, mirroring `$HOME`'s
@@ -96,13 +132,21 @@ uv run python3 main.py manage add <pkg>      # add a package to packages.json (n
     - `core/theme_appliers/local_plugins/` -- support for two apps
       (herdr, Claude Code) kept out of the general-purpose library since
       they're personal/niche rather than broadly reusable.
+- `hyprtheme-build/` -- a separate package from `hyprtheme` (own
+  `pyproject.toml`, depends on `hyprtheme` but not the other way around):
+  the one-time generator that turns a theme's `[palette]` into the Kvantum
+  theme + KDE `.colors` file hyprtheme's `qt` plugin needs. Only theme
+  authors need it installed; switching a theme never touches it. See its
+  README, or "Adding a new theme" below.
 - `core/setups/` -- one-time system setup routines (`main.py setup <name>`),
   each installing a bundled asset rather than rebuilding it from source
   (AUR `-git` packages, slow to build, for things that don't need to track
   upstream since they're already exactly what's wanted).
 - `assets/` -- bundled themes/icons/cursors/kvantum templates the setup
   routines and hyprtheme install from, instead of an AUR rebuild or a live
-  external tool call every time.
+  external tool call every time. `assets/generated/` holds the Kvantum
+  themes + KDE `.colors` files `hyprtheme-build` produces (see "Adding a
+  new theme" above) -- committed output, not rebuilt at switch time.
 - `scripts/` -- one-off maintenance tools, not part of the `main.py` CLI
   (e.g. `bake_icon_accents.py`, which produces the snapshots
   `setup papirus_folders` + hyprtheme's `icon` plugin consume).
