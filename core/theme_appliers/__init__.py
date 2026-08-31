@@ -14,6 +14,7 @@ To add support for a new app (fish, yazi, ...):
 """
 
 from core.theme_appliers import (
+    claude_theme,
     gtk_theme,
     herdr_theme,
     icon_theme,
@@ -46,6 +47,7 @@ POST_LIVE_APPLIERS = [
     swaync_theme.apply,
     waybar_theme.apply,
     herdr_theme.apply,
+    claude_theme.apply,
 ]
 
 APPLIERS = PRE_LIVE_APPLIERS + POST_LIVE_APPLIERS
