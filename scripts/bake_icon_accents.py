@@ -4,17 +4,17 @@
 Bakes each (accent color, icon theme) combination papirus-folders needs to
 produce, fixes the known folder-videos.svg symlink-alias bug, then
 snapshots the resulting places/ symlinks into assets/icon-themes/. From
-then on, core.theme_appliers.icon_theme just extracts the snapshot instead
-of invoking papirus-folders live -- which is slow (rebuilds
+then on, hyprtheme's built-in `icon` plugin just extracts the snapshot
+instead of invoking papirus-folders live -- which is slow (rebuilds
 gtk-update-icon-cache for Papirus *and* every sibling variant, no flag to
 opt out) and buggy (folder-videos.svg is a symlink alias to folder-video.svg
 for most colors, and papirus-folders' change_color() skips anything that's
 already a symlink, so "videos" never gets repointed).
 
 Run this once whenever a new (accent, icon_theme) pair is added to a theme
-profile in core/theme_manager.py's THEMES that isn't covered by COMBOS
-below yet. Needs sudo -- one password prompt covers the whole run via
-sudo's credential cache.
+file under assets/themes/ that isn't covered by COMBOS below yet. Needs
+sudo -- one password prompt covers the whole run via sudo's credential
+cache.
 """
 import subprocess
 import tarfile
@@ -24,7 +24,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 ASSETS_DIR = REPO_ROOT / "assets" / "icon-themes"
 
 # (accent, icon_theme) pairs to bake. Keep in sync with the icon_accent /
-# icon_theme values used across THEMES in core/theme_manager.py.
+# icon_theme values used across assets/themes/*.toml.
 COMBOS = [
     ("orange", "Papirus-Dark"),
     ("cat-macchiato-mauve", "Papirus-Dark"),

@@ -1,28 +1,32 @@
-"""Applies a theme profile's Claude Code CLI colors -- yes, this tool.
+"""dotmanager-local hyprtheme plugin: applies a theme to the Claude Code
+CLI -- yes, this tool. Kept out of the general-purpose hyprtheme library
+since it's tied to one specific app's token list -- not broadly reusable.
 
-Claude Code supports custom themes: a JSON file in ~/.claude/themes/
-with `{"name", "base": "dark"|"light", "overrides": {token: color}}`,
-selected by setting `"theme": "custom:<slug>"` in ~/.claude/settings.json.
-Claude Code watches ~/.claude/themes and hot-reloads on change, per its
-own docs (https://code.claude.com/docs/en/terminal-config).
+Claude Code supports custom themes: a JSON file in ~/.claude/themes/ with
+`{"name", "base": "dark"|"light", "overrides": {token: color}}`, selected
+by setting `"theme": "custom:<slug>"` in ~/.claude/settings.json. Claude
+Code watches ~/.claude/themes and hot-reloads on change, per its own docs
+(https://code.claude.com/docs/en/terminal-config).
 
 ~/.claude/settings.json isn't otherwise repo-managed (it may hold other
-user settings beyond theme), so this edits it in place like herdr's
-config.toml -- load the JSON, set just the "theme" key, write it back,
-rather than a blanket file replace.
+user settings beyond theme), so this edits it in place -- load the JSON,
+set just the "theme" key, write it back, rather than a blanket file
+replace.
 
 Token list and "mix" semantics follow the reference at
 https://gist.github.com/cameronsjo/34a6fb8ade2b44c8380e1a2adebbac2b
-(reconciled against Claude Code 2.1.251; installed here is 2.1.241),
-covering the documented tokens plus the most visually load-bearing
-internal ones (shimmer pairs, diffs, subagent palette). Skips the purely
-decorative internal-only tokens (rainbow_*, clawd_*).
+(reconciled against Claude Code 2.1.251), covering the documented tokens
+plus the most visually load-bearing internal ones (shimmer pairs, diffs,
+subagent palette). Skips the purely decorative internal-only tokens
+(rainbow_*, clawd_*).
 """
 
 import json
 from pathlib import Path
 
-from core.theme_appliers._palette import PALETTES, mix as _mix
+from hyprtheme.apps import AppConfig
+from hyprtheme.appliers._palette import mix as _mix
+from hyprtheme.theme import Theme
 
 THEMES_DIR = Path.home() / ".claude" / "themes"
 THEME_FILE = THEMES_DIR / "dotmanager.json"
@@ -87,14 +91,9 @@ def _build_overrides(p: dict) -> dict:
     }
 
 
-def apply(profile: dict) -> bool:
-    claude_theme = profile.get("claude_theme")
-    if not claude_theme:
-        return False
-
-    palette = PALETTES.get(claude_theme)
-    if palette is None:
-        print(f"[claude] no palette for '{claude_theme}', skipping")
+def apply(theme: Theme, app: AppConfig) -> bool:
+    claude_theme = theme.apps.get("claude_theme")
+    if not claude_theme or theme.palette is None:
         return False
 
     print(f"[claude] claude_theme={claude_theme}")
@@ -103,8 +102,8 @@ def apply(profile: dict) -> bool:
         json.dumps(
             {
                 "name": "dotmanager",
-                "base": palette["base"],
-                "overrides": _build_overrides(palette),
+                "base": theme.palette["base"],
+                "overrides": _build_overrides(theme.palette),
             },
             indent=2,
         )

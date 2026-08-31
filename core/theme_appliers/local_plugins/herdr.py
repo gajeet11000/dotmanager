@@ -1,43 +1,42 @@
-"""Applies a theme profile's herdr (terminal multiplexer) UI theme.
+"""dotmanager-local hyprtheme plugin: applies a theme to herdr (terminal
+multiplexer). Kept out of the general-purpose hyprtheme library since it's
+tied to one specific app's TOML config shape and a hand-picked mapping to
+its own built-in theme names -- not broadly reusable, unlike gtk/icon/qt.
 
 herdr's config.toml holds keybindings and other UI settings alongside
-theme, so this can't do a blanket file replace like kitty/swaync/lsd --
-it surgically replaces just the [theme] block (and any
-[theme.custom]/[theme.custom.light]/[theme.custom.dark] sub-tables under
-it), leaving the rest of the user's config.toml untouched. Reloads via
-`herdr server reload-config`, which herdr's own docs confirm applies UI
-settings (including theme) live without restarting panes.
+theme, so this can't do a blanket file replace like the declarative
+pointer/copy appliers -- it surgically replaces just the [theme] block
+(and any [theme.custom]/[theme.custom.light]/[theme.custom.dark]
+sub-tables under it), leaving the rest of the user's config.toml untouched.
+Reloads via `herdr server reload-config`, which herdr's own docs confirm
+applies UI settings (including theme) live without restarting panes.
 
 Note: v0.8.0 has no `sidebar_bg` override -- herdr's own docs say the
 sidebar then "keeps the host terminal background", so its color follows
-whatever kitty_theme.py set kitty to, not this file. herdr's own
+whatever the kitty applier set kitty to, not this file. herdr's own
 [theme.custom] still controls the accent/tab-highlight colors directly
 (verified live: switching themes recolors the active-tab highlight even
 with kitty's background held constant).
 
 Each profile below names the closest built-in herdr theme (herdr ships
 catppuccin, gruvbox, one-light, and others, but nothing "macchiato" or
-"github" specifically -- see src/config/theme.rs in
-herdrdev/herdr) plus a full [theme.custom] override so the result always
-matches this profile's exact palette, not just the closest built-in's
-own colors. Role names below match the installed herdr version's
-CustomThemeColors struct -- verified against v0.8.0 specifically, since
-its `master` branch already has three more fields (sidebar_bg,
-active_row_bg, selection_bg) this version doesn't recognize yet.
+"github" specifically -- see src/config/theme.rs in herdrdev/herdr) plus a
+full [theme.custom] override so the result always matches this profile's
+exact palette, not just the closest built-in's own colors. Role names
+below match the installed herdr version's CustomThemeColors struct --
+verified against v0.8.0 specifically, since its `master` branch already
+has three more fields (sidebar_bg, active_row_bg, selection_bg) this
+version doesn't recognize yet.
+
+Configure via apps.toml's [apps.herdr] `config_file` option.
 """
 
 import re
 import subprocess
 from pathlib import Path
 
-CONFIG_FILE = (
-    Path(__file__).resolve().parent.parent.parent
-    / "dotfiles"
-    / "herdr"
-    / ".config"
-    / "herdr"
-    / "config.toml"
-)
+from hyprtheme.apps import AppConfig
+from hyprtheme.theme import Theme
 
 PROFILES = {
     "gruvbox-dark": {
@@ -117,8 +116,8 @@ def _render_theme_block(name: str, custom: dict) -> str:
     return "\n".join(lines) + "\n\n"
 
 
-def apply(profile: dict) -> bool:
-    herdr_theme = profile.get("herdr_theme")
+def apply(theme: Theme, app: AppConfig) -> bool:
+    herdr_theme = theme.apps.get("herdr_theme")
     if not herdr_theme:
         return False
 
@@ -127,12 +126,13 @@ def apply(profile: dict) -> bool:
         print(f"[herdr] no profile for '{herdr_theme}', skipping")
         return False
 
-    if not CONFIG_FILE.exists():
-        print(f"[herdr] no config file at {CONFIG_FILE}, skipping")
+    config_file = Path(app.options["config_file"]).expanduser()
+    if not config_file.exists():
+        print(f"[herdr] no config file at {config_file}, skipping")
         return False
 
     print(f"[herdr] herdr_theme={herdr_theme}")
-    lines = CONFIG_FILE.read_text().splitlines(keepends=True)
+    lines = config_file.read_text().splitlines(keepends=True)
 
     start = next((i for i, line in enumerate(lines) if line.strip() == "[theme]"), None)
     if start is None:
@@ -147,7 +147,7 @@ def apply(profile: dict) -> bool:
 
     new_block = _render_theme_block(herdr_profile["name"], herdr_profile["custom"])
     lines[start:end] = [new_block]
-    CONFIG_FILE.write_text("".join(lines))
+    config_file.write_text("".join(lines))
 
     result = subprocess.run(["herdr", "server", "reload-config"], capture_output=True, text=True)
     if result.returncode != 0:

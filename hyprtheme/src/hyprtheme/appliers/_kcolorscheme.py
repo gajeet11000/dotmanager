@@ -1,24 +1,19 @@
-"""Generates a KDE Plasma-format .colors file per dotmanager theme.
+"""Generates a KDE Plasma-format .colors file from a raw hex palette.
 
-This is what hyprqt6engine's `theme:color_scheme` (see qt_theme.py)
-points at, so it can build a QPalette AND -- critically -- so KDE
-Frameworks apps can do KIconEngine's ColorScheme-Text substitution
-(recoloring symbolic action icons like zoom-in/zoom-out to match).
-Kvantum doesn't provide either of those on its own; see qt_theme.py's
-docstring for how that was confirmed.
+This is what a platform theme engine linking KIconThemes (e.g.
+hyprqt6engine) points its `color_scheme` config at, so it can build a
+QPalette AND -- critically -- so KDE Frameworks apps can do KIconEngine's
+ColorScheme-Text substitution (recoloring symbolic action icons like
+zoom-in/zoom-out to match). Kvantum doesn't provide either on its own.
 
 Section/key names and the overall shape follow the standard KDE Plasma
-.colors format (verified against /usr/share/color-schemes/Kvantum.colors,
-a real KDE-shipped scheme) -- just filled in from this palette instead
-of hand-picked values.
+.colors format (verified against a real KDE-shipped scheme,
+/usr/share/color-schemes/Kvantum.colors), just filled in from the palette.
 """
 
 from pathlib import Path
 
-from core.theme_appliers._kvantum import theme_name
-from core.theme_appliers._palette import luminance, mix
-
-SCHEMES_DIR = Path.home() / ".local" / "share" / "color-schemes"
+from hyprtheme.appliers._palette import luminance, mix
 
 
 def _rgb(hex_color: str) -> str:
@@ -87,10 +82,9 @@ def _render(name: str, p: dict) -> str:
     )
 
 
-def write_scheme(dotmanager_theme: str, palette: dict) -> Path:
-    """Generate ~/.local/share/color-schemes/dotmanager-<name>.colors, returning its path."""
-    name = theme_name(dotmanager_theme)
-    SCHEMES_DIR.mkdir(parents=True, exist_ok=True)
-    path = SCHEMES_DIR / f"{name}.colors"
-    path.write_text(_render(name, palette))
+def write_scheme(schemes_dir: Path, theme_name: str, palette: dict) -> Path:
+    """Generate `<schemes_dir>/<theme_name>.colors`, returning its path."""
+    schemes_dir.mkdir(parents=True, exist_ok=True)
+    path = schemes_dir / f"{theme_name}.colors"
+    path.write_text(_render(theme_name, palette))
     return path

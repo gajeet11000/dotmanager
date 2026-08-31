@@ -1,0 +1,26 @@
+[project]
+name = "hyprtheme"
+version = "0.1.0"
+description = "A theme switcher for Hyprland (and anything else with a config file) -- swap GTK/Qt/terminal/bar/etc. colors live, no logout needed"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+hyprtheme = "hyprtheme.cli:main"
+
+# Built-in appliers register themselves in the same entry-point group a
+# third-party plugin package would use -- see README.md's "Adding app
+# support" section.
+[project.entry-points."hyprtheme.appliers"]
+gtk = "hyprtheme.appliers.gtk:apply"
+icon = "hyprtheme.appliers.icon:apply"
+qt = "hyprtheme.appliers.qt:apply"
+"nwg-look:post" = "hyprtheme.appliers._nwg_look:apply_live"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hyprtheme"]
