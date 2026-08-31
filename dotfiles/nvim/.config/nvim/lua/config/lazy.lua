@@ -18,11 +18,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
--- Opens an RPC socket per session so `dotmanager theme set` can live-reload
--- this instance's colorscheme without a restart -- see
--- core/theme_appliers/nvim_theme.py and lua/config/theme.lua.
-local sockets_dir = vim.fn.stdpath("cache") .. "/dotmanager-sockets"
-vim.fn.mkdir(sockets_dir, "p")
-vim.fn.serverstart(sockets_dir .. "/" .. vim.fn.getpid() .. ".sock")
-
+-- Applies whatever `dotmanager theme set` last wrote to current-theme.lua.
+-- Like Hyprland's own config, this is read once at startup -- an
+-- already-open session doesn't pick up a later theme switch; reopen nvim
+-- to get it (see core/theme_appliers/nvim_theme.py).
 require("config.theme").apply(require("config.current-theme"))
