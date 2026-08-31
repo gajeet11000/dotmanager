@@ -10,14 +10,21 @@ theme rendered it correctly dark. Kvantum's QStyle plugin builds its own
 palette from the theme's [GeneralColors] and reaches KDE apps too, so
 that's what this drives instead.
 
-assets/kvantum/base.svg is copied verbatim from the system-installed
-`catppuccin-macchiato-mauve` Kvantum theme (kvantum-theme-catppuccin-git)
--- confirmed to have zero hardcoded colors (`grep fill=\"#` on it matches
-nothing), so it's a pure shape template safe to reuse for any palette.
-assets/kvantum/base.kvconfig.template is that same theme's .kvconfig
-with every one of its hex colors replaced by an @ROLE@ token (see the
-_TOKEN_ROLES mapping below) -- structure/geometry/widget-state settings
-untouched, only recolored per dotmanager theme.
+assets/kvantum/base-dark.svg and base-light.svg are copied verbatim from
+the system-installed `catppuccin-macchiato-mauve` (dark) and
+`catppuccin-latte-blue` (light) Kvantum themes -- both confirmed to have
+zero hardcoded colors (`grep fill=\"#` matches nothing in either), so
+each is a pure shape template safe to recolor for any palette sharing
+its base. They are NOT interchangeable, though: a dark-sourced SVG
+renders a light palette's window background wrong (verified live via a
+byte-identical-except-colors kvconfig -- the SVG, not the kvconfig, was
+the difference), so this picks the SVG matching each theme's own
+`base`. assets/kvantum/base.kvconfig.template is the dark theme's
+.kvconfig with every one of its hex colors replaced by an @ROLE@ token
+(see _build_tokens below) -- structure/geometry/widget-state settings
+untouched, only recolored per dotmanager theme. The template is shared
+across both SVGs since the only kvconfig difference between the two
+source themes (once colors are masked) was the `comment=` line.
 
 Each dotmanager theme gets its own generated Kvantum theme directory,
 ~/.config/Kvantum/dotmanager-<name>/, and ~/.config/Kvantum/kvantum.
@@ -40,7 +47,10 @@ from pathlib import Path
 from core.theme_appliers._palette import PALETTES, luminance, mix
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-BASE_SVG = REPO_ROOT / "assets" / "kvantum" / "base.svg"
+BASE_SVG = {
+    "dark": REPO_ROOT / "assets" / "kvantum" / "base-dark.svg",
+    "light": REPO_ROOT / "assets" / "kvantum" / "base-light.svg",
+}
 TEMPLATE_FILE = REPO_ROOT / "assets" / "kvantum" / "base.kvconfig.template"
 
 KVANTUM_DIR = Path.home() / ".config" / "Kvantum"
@@ -109,7 +119,7 @@ def _write_theme_dir(dotmanager_theme: str, palette: dict) -> None:
     theme_dir.mkdir(parents=True, exist_ok=True)
 
     (theme_dir / f"{name}.kvconfig").write_text(_render_kvconfig(palette))
-    shutil.copyfile(BASE_SVG, theme_dir / f"{name}.svg")
+    shutil.copyfile(BASE_SVG[palette["base"]], theme_dir / f"{name}.svg")
 
 
 def _select_theme(dotmanager_theme: str) -> None:
