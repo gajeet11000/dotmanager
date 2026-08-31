@@ -7,8 +7,8 @@
 * in dotfiles/rofi/.config/rofi/colors/github-light.rasi.
 *
 * mainbar-bg-1/2/3 are the three gradient stops for .mainbar's glass
-* background -- shared with gruvbox-light.css (a uniform "white glass"
-* look across light themes), high-alpha to minimize see-through.
+* background -- a uniform "white glass" look, high-alpha to minimize
+* see-through.
 */
 
 @define-color mainbar-bg-1 rgba(255, 255, 255, 0.83);

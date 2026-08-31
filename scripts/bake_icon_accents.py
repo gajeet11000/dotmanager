@@ -27,7 +27,6 @@ ASSETS_DIR = REPO_ROOT / "assets" / "icon-themes"
 # icon_theme values used across THEMES in core/theme_manager.py.
 COMBOS = [
     ("orange", "Papirus-Dark"),
-    ("orange", "Papirus-Light"),
     ("cat-macchiato-mauve", "Papirus-Dark"),
     ("blue", "Papirus-Light"),
 ]

@@ -52,13 +52,6 @@ THEMES: dict[str, dict] = {
         icon_theme="Papirus-Dark",
         icon_accent="orange",
     ),
-    "gruvbox-light": _profile(
-        "gruvbox-light",
-        gtk_theme="Gruvbox-Light",
-        color_scheme="default",
-        icon_theme="Papirus-Light",
-        icon_accent="orange",
-    ),
     "catppuccin-macchiato-mauve": _profile(
         "catppuccin-macchiato-mauve",
         gtk_theme="catppuccin-macchiato-mauve-standard+default",

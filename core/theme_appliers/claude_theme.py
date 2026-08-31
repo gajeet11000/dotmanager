@@ -37,13 +37,6 @@ PALETTES = {
         "purple": "#d3869b", "cyan": "#8ec07c", "orange": "#fe8019",
         "selection_bg": "#504945",
     },
-    "gruvbox-light": {
-        "base": "light",
-        "bg": "#fbf1c7", "fg": "#3c3836", "accent": "#b57614", "muted": "#a89984",
-        "red": "#9d0006", "green": "#79740e", "yellow": "#b57614", "blue": "#076678",
-        "purple": "#8f3f71", "cyan": "#427b58", "orange": "#d65d0e",
-        "selection_bg": "#d5c4a1",
-    },
     "catppuccin-macchiato-mauve": {
         "base": "dark",
         "bg": "#24273a", "fg": "#cad3f5", "accent": "#c6a0f6", "muted": "#6e738d",

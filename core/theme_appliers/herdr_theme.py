@@ -16,8 +16,8 @@ whatever kitty_theme.py set kitty to, not this file. herdr's own
 with kitty's background held constant).
 
 Each profile below names the closest built-in herdr theme (herdr ships
-catppuccin, gruvbox, gruvbox-light, one-light, and others, but nothing
-"macchiato" or "github" specifically -- see src/config/theme.rs in
+catppuccin, gruvbox, one-light, and others, but nothing "macchiato" or
+"github" specifically -- see src/config/theme.rs in
 herdrdev/herdr) plus a full [theme.custom] override so the result always
 matches this profile's exact palette, not just the closest built-in's
 own colors. Role names below match the installed herdr version's
@@ -59,27 +59,6 @@ PROFILES = {
             "blue": "#83a598",
             "teal": "#8ec07c",
             "peach": "#fe8019",
-        },
-    },
-    "gruvbox-light": {
-        "name": "gruvbox-light",
-        "custom": {
-            "accent": "#b57614",
-            "panel_bg": "#fbf1c7",
-            "surface0": "#ebdbb2",
-            "surface1": "#d5c4a1",
-            "surface_dim": "#bdae93",
-            "overlay0": "#a89984",
-            "overlay1": "#928374",
-            "text": "#3c3836",
-            "subtext0": "#665c54",
-            "mauve": "#8f3f71",
-            "green": "#79740e",
-            "yellow": "#b57614",
-            "red": "#9d0006",
-            "blue": "#076678",
-            "teal": "#427b58",
-            "peach": "#d65d0e",
         },
     },
     "catppuccin-macchiato-mauve": {

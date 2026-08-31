@@ -6,7 +6,6 @@ local M = {}
 
 local PROFILES = {
   ["gruvbox-dark"] = { colorscheme = "gruvbox", background = "dark" },
-  ["gruvbox-light"] = { colorscheme = "gruvbox", background = "light" },
   ["catppuccin-macchiato-mauve"] = { colorscheme = "catppuccin", background = "dark" },
   ["github-light"] = { colorscheme = "vscode", background = "light" },
 }
