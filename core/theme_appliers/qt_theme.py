@@ -1,113 +1,88 @@
-"""Applies a theme profile's colors to Qt5/Qt6 applications, via qt5ct/qt6ct.
+"""Applies a theme profile's colors to Qt5/Qt6 applications, via Kvantum.
 
-Qt has no native "just give me these hex codes" theming path -- qt5ct and
-qt6ct (already installed) are the standard way to drive it: each writes a
-QSettings ini (qt{5,6}ct.conf) that Qt's "qt5ct"/"qt6ct" platform theme
-plugins read at startup (selected via QT_QPA_PLATFORMTHEME -- see
-dotfiles/hypr/.config/hypr/configs/environment.lua). This applier:
+Plain qt5ct/qt6ct (a QPalette handed to the built-in Fusion style) only
+themes vanilla Qt widgets -- KDE Frameworks apps (okular, dolphin, kate,
+...) layer their own KColorScheme system on top and mostly ignore that
+QPalette, so they stay stuck on Breeze Light regardless. Verified live:
+screenshotting okular with style=Fusion + a custom QPalette still
+rendered fully light; switching to style=kvantum with a real Kvantum
+theme rendered it correctly dark. Kvantum's QStyle plugin builds its own
+palette from the theme's [GeneralColors] and reaches KDE apps too, so
+that's what this drives instead.
 
-  - sets style=Fusion (Qt's built-in style that actually honors a custom
-    QPalette -- most other styles, including Kvantum, need a matching
-    pre-built theme asset per color scheme; only catppuccin-macchiato-mauve
-    has one installed system-wide, so Fusion + a generated palette is the
-    only approach that covers every dotmanager theme uniformly)
-  - sets icon_theme= to the same Papirus variant icon_theme.py already
-    picked for this profile, so file/folder icons in Qt file dialogs match
-  - writes qt{5,6}ct's color_scheme_path target (style-colors.conf) with a
-    QPalette generated from the same base hex values core.theme_appliers
-    ._palette already defines for claude_theme/herdr_theme
+assets/kvantum/base.svg is copied verbatim from the system-installed
+`catppuccin-macchiato-mauve` Kvantum theme (kvantum-theme-catppuccin-git)
+-- confirmed to have zero hardcoded colors (`grep fill=\"#` on it matches
+nothing), so it's a pure shape template safe to reuse for any palette.
+assets/kvantum/base.kvconfig.template is that same theme's .kvconfig
+with every one of its hex colors replaced by an @ROLE@ token (see the
+_TOKEN_ROLES mapping below) -- structure/geometry/widget-state settings
+untouched, only recolored per dotmanager theme.
 
-qt{5,6}ct.conf hold other user state (fonts, window geometry) qt5ct/qt6ct
-themselves manage, so this patches just the style/icon_theme/custom_palette
-lines in place rather than replacing the file, same technique herdr_theme
-uses on config.toml.
-
-QPalette::ColorRole order/count (21 roles, Qt5 and Qt6 agree) verified
-against the sample palettes qt5ct itself ships in /usr/share/qt5ct/colors/.
-inactive_colors is always identical to active_colors in every one of those
-samples, so this only computes an active row and a dimmed disabled row.
+Each dotmanager theme gets its own generated Kvantum theme directory,
+~/.config/Kvantum/dotmanager-<name>/, and ~/.config/Kvantum/kvantum.
+kvconfig's `theme=` is repointed at it. qt{5,6}ct.conf get style=kvantum
+(not "kvantum-dark", which -- confusingly -- is Kvantum's OWN separate
+built-in fixed dark theme, not "follow whatever's selected").
 """
 
+import shutil
 from pathlib import Path
 
 from core.theme_appliers._palette import PALETTES, luminance, mix
 
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+BASE_SVG = REPO_ROOT / "assets" / "kvantum" / "base.svg"
+TEMPLATE_FILE = REPO_ROOT / "assets" / "kvantum" / "base.kvconfig.template"
+
+KVANTUM_DIR = Path.home() / ".config" / "Kvantum"
+KVANTUM_MAIN_CONF = KVANTUM_DIR / "kvantum.kvconfig"
+
 QT5CT_CONF = Path.home() / ".config" / "qt5ct" / "qt5ct.conf"
 QT6CT_CONF = Path.home() / ".config" / "qt6ct" / "qt6ct.conf"
-QT5CT_COLORS = Path.home() / ".config" / "qt5ct" / "style-colors.conf"
-QT6CT_COLORS = Path.home() / ".config" / "qt6ct" / "style-colors.conf"
-
-# QPalette::ColorRole, in enum order: WindowText, Button, Light, Midlight,
-# Dark, Mid, Text, BrightText, ButtonText, Base, Window, Shadow, Highlight,
-# HighlightedText, Link, LinkVisited, AlternateBase, NoRole, ToolTipBase,
-# ToolTipText, PlaceholderText.
-_ROLE_NAMES = [
-    "WindowText", "Button", "Light", "Midlight", "Dark", "Mid", "Text",
-    "BrightText", "ButtonText", "Base", "Window", "Shadow", "Highlight",
-    "HighlightedText", "Link", "LinkVisited", "AlternateBase", "NoRole",
-    "ToolTipBase", "ToolTipText", "PlaceholderText",
-]
 
 
-def _argb(hex_color: str) -> str:
-    return "#ff" + hex_color.lstrip("#")
+def _theme_name(dotmanager_theme: str) -> str:
+    return f"dotmanager-{dotmanager_theme}"
 
 
-def _build_active_row(p: dict) -> dict:
+def _build_tokens(p: dict) -> dict:
     bg, fg, accent, muted = p["bg"], p["fg"], p["accent"], p["muted"]
-    blue, purple = p["blue"], p["purple"]
-    light = p["base"] == "light"
-
-    button = mix(bg, fg, 0.08)
-    dark_role = mix(button, "#000000", 0.30)
-    highlighted_text = "#000000" if luminance(accent) > 0.5 else "#ffffff"
 
     return {
-        "WindowText": fg,
-        "Button": button,
-        "Light": mix(bg, fg, 0.20),
-        "Midlight": mix(bg, fg, 0.14),
-        "Dark": dark_role,
-        "Mid": mix(button, dark_role, 0.5),
-        "Text": fg,
-        "BrightText": "#ffffff",
-        "ButtonText": fg,
-        "Base": "#ffffff" if light else mix(bg, fg, 0.08),
-        "Window": bg,
-        "Shadow": mix(bg, "#000000", 0.40),
-        "Highlight": accent,
-        "HighlightedText": highlighted_text,
-        "Link": blue,
-        "LinkVisited": purple,
-        "AlternateBase": mix(bg, fg, 0.05),
-        "NoRole": bg,
-        "ToolTipBase": mix(bg, fg, 0.08),
-        "ToolTipText": fg,
-        "PlaceholderText": muted,
+        "@WINDOW@": bg,
+        "@BASE@": mix(bg, "#000000", 0.12),
+        "@BUTTON@": mix(bg, fg, 0.08),
+        "@LIGHT@": mix(bg, fg, 0.15),
+        "@HIGHLIGHT_ALPHA@": accent + "4d",  # ~30% alpha, matches the source theme
+        "@TEXT@": fg,
+        "@MUTED@": muted,
+        "@DIM_TEXT@": mix(fg, bg, 0.35),
+        "@ACCENT@": accent,
+        "@LINK_VISITED@": p["purple"],
+        "@ON_ACCENT@": "#000000" if luminance(accent) > 0.5 else "#ffffff",
     }
 
 
-# Roles that get replaced by `muted` in the disabled row; everything else
-# is carried over unchanged (matches qt5ct's own bundled sample palettes).
-_DISABLED_MUTED_ROLES = {"WindowText", "Text", "ButtonText", "HighlightedText", "ToolTipText"}
+def _render_kvconfig(p: dict) -> str:
+    text = TEMPLATE_FILE.read_text()
+    for token, value in _build_tokens(p).items():
+        text = text.replace(token, value)
+    return text
 
 
-def _render_colors_conf(p: dict) -> str:
-    active = _build_active_row(p)
-    disabled = {
-        role: (p["muted"] if role in _DISABLED_MUTED_ROLES else active[role])
-        for role in _ROLE_NAMES
-    }
+def _write_theme_dir(dotmanager_theme: str, palette: dict) -> None:
+    name = _theme_name(dotmanager_theme)
+    theme_dir = KVANTUM_DIR / name
+    theme_dir.mkdir(parents=True, exist_ok=True)
 
-    active_str = ", ".join(_argb(active[role]) for role in _ROLE_NAMES)
-    disabled_str = ", ".join(_argb(disabled[role]) for role in _ROLE_NAMES)
+    (theme_dir / f"{name}.kvconfig").write_text(_render_kvconfig(palette))
+    shutil.copyfile(BASE_SVG, theme_dir / f"{name}.svg")
 
-    return (
-        "[ColorScheme]\n"
-        f"active_colors={active_str}\n"
-        f"disabled_colors={disabled_str}\n"
-        f"inactive_colors={active_str}\n"
-    )
+
+def _select_theme(dotmanager_theme: str) -> None:
+    KVANTUM_DIR.mkdir(parents=True, exist_ok=True)
+    KVANTUM_MAIN_CONF.write_text(f"[General]\ntheme={_theme_name(dotmanager_theme)}\n")
 
 
 def _patch_conf(conf_file: Path, icon_theme: str) -> None:
@@ -115,7 +90,7 @@ def _patch_conf(conf_file: Path, icon_theme: str) -> None:
         print(f"[qt] no config at {conf_file}, skipping")
         return
 
-    replacements = {"style": "Fusion", "custom_palette": "true", "icon_theme": icon_theme}
+    replacements = {"style": "kvantum", "custom_palette": "false", "icon_theme": icon_theme}
     lines = conf_file.read_text().splitlines(keepends=True)
     for i, line in enumerate(lines):
         key = line.split("=", 1)[0].strip()
@@ -137,13 +112,8 @@ def apply(profile: dict) -> bool:
     icon_theme = profile.get("icon_theme", "Papirus-Dark")
     print(f"[qt] qt_theme={qt_theme} icon_theme={icon_theme}")
 
-    colors_conf = _render_colors_conf(palette)
-    for path in (QT5CT_COLORS, QT6CT_COLORS):
-        path.parent.mkdir(parents=True, exist_ok=True)
-        if path.is_symlink():
-            path.unlink()
-        path.write_text(colors_conf)
-
+    _write_theme_dir(qt_theme, palette)
+    _select_theme(qt_theme)
     _patch_conf(QT5CT_CONF, icon_theme)
     _patch_conf(QT6CT_CONF, icon_theme)
 
