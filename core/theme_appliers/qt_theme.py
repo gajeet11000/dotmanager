@@ -41,6 +41,13 @@ KVANTUM_MAIN_CONF = KVANTUM_DIR / "kvantum.kvconfig"
 QT5CT_CONF = Path.home() / ".config" / "qt5ct" / "qt5ct.conf"
 QT6CT_CONF = Path.home() / ".config" / "qt6ct" / "qt6ct.conf"
 
+# KDE Frameworks apps (okular, dolphin, ...) resolve their icon theme from
+# here -- separately from qt{5,6}ct's icon_theme=, which only plain Qt
+# apps honor. Verified live: qt6ct.conf correctly said icon_theme=Papirus
+# -Dark, but okular's toolbar icons still rendered as barely-visible
+# light-on-light until this file's [Icons] Theme= was set too.
+KDEGLOBALS = Path.home() / ".config" / "kdeglobals"
+
 
 def _theme_name(dotmanager_theme: str) -> str:
     return f"dotmanager-{dotmanager_theme}"
@@ -99,6 +106,37 @@ def _patch_conf(conf_file: Path, icon_theme: str) -> None:
     conf_file.write_text("".join(lines))
 
 
+def _set_ini_key(path: Path, section: str, key: str, value: str) -> None:
+    """Ensure `key=value` under `[section]` in an INI file, preserving
+    everything else -- creates the file/section if either is missing."""
+    header = f"[{section}]"
+    lines = path.read_text().splitlines(keepends=True) if path.exists() else []
+
+    start = next((i for i, line in enumerate(lines) if line.strip() == header), None)
+    if start is None:
+        if lines and not lines[-1].endswith("\n"):
+            lines[-1] += "\n"
+        lines += [f"\n{header}\n" if lines else f"{header}\n", f"{key}={value}\n"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("".join(lines))
+        return
+
+    end = len(lines)
+    for i in range(start + 1, len(lines)):
+        if lines[i].startswith("["):
+            end = i
+            break
+
+    for i in range(start + 1, end):
+        if lines[i].split("=", 1)[0].strip() == key:
+            lines[i] = f"{key}={value}\n"
+            path.write_text("".join(lines))
+            return
+
+    lines.insert(end, f"{key}={value}\n")
+    path.write_text("".join(lines))
+
+
 def apply(profile: dict) -> bool:
     qt_theme = profile.get("qt_theme")
     if not qt_theme:
@@ -116,5 +154,6 @@ def apply(profile: dict) -> bool:
     _select_theme(qt_theme)
     _patch_conf(QT5CT_CONF, icon_theme)
     _patch_conf(QT6CT_CONF, icon_theme)
+    _set_ini_key(KDEGLOBALS, "Icons", "Theme", icon_theme)
 
     return True
