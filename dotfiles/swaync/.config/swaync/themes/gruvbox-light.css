@@ -1,0 +1,57 @@
+/* swaync theme -- Gruvbox Light. Imports the packaged stylesheet for all
+   component layout rules, then overrides just the color variables it
+   defines. RGB values match the palette used across the rest of this
+   theme (see dotfiles/kitty/.config/kitty/themes/gruvbox-light.conf). */
+@import url("file:///etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(251, 241, 199, 0.9);
+  --noti-border-color: rgba(60, 56, 54, 0.15);
+  --noti-bg: 242, 229, 188;
+  --noti-bg-alpha: 0.92;
+  --noti-bg-darker: rgb(235, 219, 178);
+  --noti-bg-hover: rgb(235, 219, 178);
+  --noti-bg-focus: rgba(235, 219, 178, 0.6);
+  --noti-close-bg: rgba(60, 56, 54, 0.1);
+  --noti-close-bg-hover: rgba(60, 56, 54, 0.15);
+  --text-color: rgb(60, 56, 54);
+  --text-color-disabled: rgb(124, 111, 100);
+  --bg-selected: rgb(181, 118, 20);
+}
+
+@define-color cc-bg rgba(251, 241, 199, 0.9);
+@define-color noti-border-color rgba(60, 56, 54, 0.15);
+@define-color noti-bg rgba(242, 229, 188, 0.92);
+@define-color noti-bg-opaque rgb(242, 229, 188);
+@define-color noti-bg-darker rgb(235, 219, 178);
+@define-color noti-bg-hover rgb(235, 219, 178);
+@define-color noti-bg-hover-opaque rgb(235, 219, 178);
+@define-color noti-bg-focus rgba(235, 219, 178, 0.6);
+@define-color noti-close-bg rgba(60, 56, 54, 0.1);
+@define-color noti-close-bg-hover rgba(60, 56, 54, 0.15);
+@define-color text-color rgb(60, 56, 54);
+@define-color text-color-disabled rgb(124, 111, 100);
+@define-color bg-selected rgb(181, 118, 20);
+
+/* Native GTK switch/toggle widgets: the packaged stylesheet only sets
+   border-radius/margin on these, never color, so they otherwise inherit
+   whatever accent the active GTK theme provides instead of this one. */
+switch,
+.widget-buttons-grid flowboxchild > button.toggle {
+  background-color: rgba(124, 111, 100, 0.3);
+  background-image: none;
+}
+
+switch slider {
+  background-color: rgb(124, 111, 100);
+}
+
+switch:checked,
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background-color: var(--bg-selected);
+  background-image: none;
+}
+
+switch:checked slider {
+  background-color: rgb(255, 255, 255);
+}

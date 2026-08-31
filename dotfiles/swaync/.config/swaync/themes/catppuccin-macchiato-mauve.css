@@ -1,0 +1,58 @@
+/* swaync theme -- Catppuccin Macchiato (mauve accent). Imports the packaged
+   stylesheet for all component layout rules, then overrides just the color
+   variables it defines. RGB values match the palette used across the rest
+   of this theme (see
+   dotfiles/kitty/.config/kitty/themes/catppuccin-macchiato-mauve.conf). */
+@import url("file:///etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(36, 39, 58, 0.85);
+  --noti-border-color: rgba(202, 211, 245, 0.12);
+  --noti-bg: 54, 58, 79;
+  --noti-bg-alpha: 0.9;
+  --noti-bg-darker: rgb(30, 32, 48);
+  --noti-bg-hover: rgb(73, 77, 100);
+  --noti-bg-focus: rgba(73, 77, 100, 0.6);
+  --noti-close-bg: rgba(202, 211, 245, 0.1);
+  --noti-close-bg-hover: rgba(202, 211, 245, 0.15);
+  --text-color: rgb(202, 211, 245);
+  --text-color-disabled: rgb(110, 115, 141);
+  --bg-selected: rgb(198, 160, 246);
+}
+
+@define-color cc-bg rgba(36, 39, 58, 0.85);
+@define-color noti-border-color rgba(202, 211, 245, 0.12);
+@define-color noti-bg rgba(54, 58, 79, 0.9);
+@define-color noti-bg-opaque rgb(54, 58, 79);
+@define-color noti-bg-darker rgb(30, 32, 48);
+@define-color noti-bg-hover rgb(73, 77, 100);
+@define-color noti-bg-hover-opaque rgb(73, 77, 100);
+@define-color noti-bg-focus rgba(73, 77, 100, 0.6);
+@define-color noti-close-bg rgba(202, 211, 245, 0.1);
+@define-color noti-close-bg-hover rgba(202, 211, 245, 0.15);
+@define-color text-color rgb(202, 211, 245);
+@define-color text-color-disabled rgb(110, 115, 141);
+@define-color bg-selected rgb(198, 160, 246);
+
+/* Native GTK switch/toggle widgets: the packaged stylesheet only sets
+   border-radius/margin on these, never color, so they otherwise inherit
+   whatever accent the active GTK theme provides instead of this one. */
+switch,
+.widget-buttons-grid flowboxchild > button.toggle {
+  background-color: rgba(110, 115, 141, 0.3);
+  background-image: none;
+}
+
+switch slider {
+  background-color: rgb(110, 115, 141);
+}
+
+switch:checked,
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background-color: var(--bg-selected);
+  background-image: none;
+}
+
+switch:checked slider {
+  background-color: rgb(255, 255, 255);
+}

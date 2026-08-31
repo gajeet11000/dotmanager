@@ -1,0 +1,57 @@
+/* swaync theme -- Gruvbox Dark. Imports the packaged stylesheet for all
+   component layout rules, then overrides just the color variables it
+   defines. RGB values match the palette used across the rest of this
+   theme (see dotfiles/kitty/.config/kitty/themes/gruvbox-dark.conf). */
+@import url("file:///etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(40, 40, 40, 0.85);
+  --noti-border-color: rgba(146, 131, 116, 0.35);
+  --noti-bg: 60, 56, 54;
+  --noti-bg-alpha: 0.9;
+  --noti-bg-darker: rgb(40, 40, 40);
+  --noti-bg-hover: rgb(80, 73, 69);
+  --noti-bg-focus: rgba(80, 73, 69, 0.6);
+  --noti-close-bg: rgba(235, 219, 178, 0.1);
+  --noti-close-bg-hover: rgba(235, 219, 178, 0.15);
+  --text-color: rgb(235, 219, 178);
+  --text-color-disabled: rgb(146, 131, 116);
+  --bg-selected: rgb(215, 153, 33);
+}
+
+@define-color cc-bg rgba(40, 40, 40, 0.85);
+@define-color noti-border-color rgba(146, 131, 116, 0.35);
+@define-color noti-bg rgba(60, 56, 54, 0.9);
+@define-color noti-bg-opaque rgb(60, 56, 54);
+@define-color noti-bg-darker rgb(40, 40, 40);
+@define-color noti-bg-hover rgb(80, 73, 69);
+@define-color noti-bg-hover-opaque rgb(80, 73, 69);
+@define-color noti-bg-focus rgba(80, 73, 69, 0.6);
+@define-color noti-close-bg rgba(235, 219, 178, 0.1);
+@define-color noti-close-bg-hover rgba(235, 219, 178, 0.15);
+@define-color text-color rgb(235, 219, 178);
+@define-color text-color-disabled rgb(146, 131, 116);
+@define-color bg-selected rgb(215, 153, 33);
+
+/* Native GTK switch/toggle widgets: the packaged stylesheet only sets
+   border-radius/margin on these, never color, so they otherwise inherit
+   whatever accent the active GTK theme provides instead of this one. */
+switch,
+.widget-buttons-grid flowboxchild > button.toggle {
+  background-color: rgba(146, 131, 116, 0.3);
+  background-image: none;
+}
+
+switch slider {
+  background-color: rgb(146, 131, 116);
+}
+
+switch:checked,
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background-color: var(--bg-selected);
+  background-image: none;
+}
+
+switch:checked slider {
+  background-color: rgb(255, 255, 255);
+}
