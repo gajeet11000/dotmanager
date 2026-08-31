@@ -1,25 +1,25 @@
 onboarding = false
 
 [theme]
-name = "catppuccin"
+name = "one-light"
 
 [theme.custom]
-accent = "#c6a0f6"
-panel_bg = "#24273a"
-surface0 = "#363a4f"
-surface1 = "#494d64"
-surface_dim = "#5b6078"
-overlay0 = "#6e738d"
-overlay1 = "#8087a2"
-text = "#cad3f5"
-subtext0 = "#a5adcb"
-mauve = "#c6a0f6"
-green = "#a6da95"
-yellow = "#eed49f"
-red = "#ed8796"
-blue = "#8aadf4"
-teal = "#8bd5ca"
-peach = "#f5a97f"
+accent = "#0969da"
+panel_bg = "#ffffff"
+surface0 = "#f6f8fa"
+surface1 = "#eaeef2"
+surface_dim = "#d0d7de"
+overlay0 = "#8c959f"
+overlay1 = "#8c959f"
+text = "#24292f"
+subtext0 = "#6e7781"
+mauve = "#8250df"
+green = "#116329"
+yellow = "#4d2d00"
+red = "#cf222e"
+blue = "#0969da"
+teal = "#1b7c83"
+peach = "#9a6700"
 
 [keys]
 prefix = "ctrl+s"
