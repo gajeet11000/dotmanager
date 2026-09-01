@@ -111,12 +111,19 @@ Pick an installed icon theme variant:
 icon_theme = "Papirus-Light"
 ```
 
-If using an accent color, bake it once (only if this exact
-`(accent, icon_theme)` pair isn't baked yet):
+If using an accent color, first see what colors `papirus-folders` actually
+supports -- don't guess the name:
+
+```sh
+papirus-folders -l
+```
+
+Pick one from that list (e.g. `cat-latte-mauve`), then bake it once (only
+if this exact `(accent, icon_theme)` pair isn't baked yet):
 
 ```sh
 # add to COMBOS in scripts/bake_icon_accents.py:
-("mauve", "Papirus-Light", "catppuccin-latte"),
+("cat-latte-mauve", "Papirus-Light", "catppuccin-latte"),
 ```
 
 ```sh
@@ -125,7 +132,7 @@ uv run python3 scripts/bake_icon_accents.py   # needs sudo
 
 ```toml
 [apps]
-icon_accent = "mauve"
+icon_accent = "cat-latte-mauve"
 ```
 
 **Used by:** `icon_theme.py` -- patches `icon_theme` into gsettings same as
