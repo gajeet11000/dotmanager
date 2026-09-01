@@ -13,6 +13,7 @@ rofi_theme = "gruvbox-dark"
 waybar_theme = "gruvbox-dark"
 herdr_theme = "gruvbox-dark"
 claude_theme = "gruvbox-dark"
+yazi_theme = "gruvbox-dark"
 
 [palette]
 base = "dark"

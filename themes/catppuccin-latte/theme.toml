@@ -13,6 +13,7 @@ lsd_theme = "catppuccin-latte"
 nvim_theme = "catppuccin-latte"
 herdr_theme = "catppuccin-latte"
 claude_theme = "catppuccin-latte"
+yazi_theme = "catppuccin-latte"
 
 [palette]
 base = "light"

@@ -18,6 +18,7 @@ from core.setups import gtk_theme as gtk_theme_setup
 from core.setups import nwg_look as nwg_look_setup
 from core.setups import papirus_folders as papirus_folders_setup
 from core.setups import sddm as sddm_setup
+from core.setups import yazi_theme as yazi_theme_setup
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -123,6 +124,10 @@ def build_parser() -> argparse.ArgumentParser:
     setup_sub.add_parser(
         "papirus_folders",
         help="Install the papirus-folders CLI + Catppuccin colored folder icons (no AUR rebuild)",
+    )
+    setup_sub.add_parser(
+        "yazi_theme",
+        help="Install all bundled yazi flavors (assets/yazi-flavors/*.yazi) to ~/.config/yazi/flavors/",
     )
 
     sddm_parser = setup_sub.add_parser(
@@ -343,6 +348,8 @@ def main() -> None:
             cursor_theme_setup.setup()
         elif args.target == "papirus_folders":
             papirus_folders_setup.setup()
+        elif args.target == "yazi_theme":
+            yazi_theme_setup.setup()
         elif args.target == "sddm":
             if args.action == "install":
                 sddm_setup.install_theme()

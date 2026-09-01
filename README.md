@@ -3,7 +3,7 @@
 Personal Arch Linux + Hyprland dotfiles, managed with GNU Stow and a small
 Python CLI (`main.py`). Covers package installation, dotfile symlinking,
 system setup steps (GTK/icon/cursor themes, SDDM, Docker, ...), and live
-theme switching across GTK, Qt/KDE, the terminal stack, and Neovim.
+theme switching across GTK, Qt/KDE, the terminal stack, yazi, and Neovim.
 
 ## Fresh install
 
@@ -37,8 +37,10 @@ uv run python3 main.py setup papirus_folders # installs papirus-folders + the ca
                                        # icon accent -- its baked snapshot in
                                        # themes/catppuccin-macchiato-mauve/icons/ symlinks to
                                        # files this step provides, not stock Papirus)
+uv run python3 main.py setup yazi_theme      # installs the bundled yazi flavors to
+                                       # ~/.config/yazi/flavors/
 
-# 5. Apply a theme (gruvbox-dark, catppuccin-macchiato-mauve, catppuccin-latte)
+# 5. Apply a theme (see `themes/` for the current list)
 uv run python3 main.py theme list
 uv run python3 main.py theme set catppuccin-macchiato-mauve
 ```
@@ -83,11 +85,10 @@ uv run python3 main.py manage add <pkg>      # add a package to packages.json (n
   switcher. Plain and manual on purpose: one Python module per app, each
   reading whatever key(s) it needs out of a theme's `themes/<name>/theme.toml`
   and writing/copying the right file. No plugin system, no generic DSL.
-- `themes/<name>/` -- one folder per theme. Fixed to three: `gruvbox-dark`,
-  `catppuccin-macchiato-mauve`, `catppuccin-latte` -- this is the whole
-  set, not a pattern meant to grow. Each holds its `theme.toml` plus one
-  subfolder per app that needs an actual file (`gtk/`, `icons/`, `qt/`,
-  `kitty/`, `waybar/`, `rofi/`, `swaync/`, `lsd/`).
+- `themes/<name>/` -- one folder per theme. Each holds its `theme.toml`
+  plus one subfolder per app that needs an actual file (`gtk/`, `icons/`,
+  `qt/`, `kitty/`, `waybar/`, `rofi/`, `swaync/`, `lsd/`). Add or remove a
+  theme by adding or removing this one folder.
 - `core/setups/` -- one-time system setup routines (`main.py setup <name>`),
   each installing a bundled asset rather than rebuilding it from source
   (AUR `-git` packages, slow to build, for things that don't need to track
@@ -96,7 +97,9 @@ uv run python3 main.py manage add <pkg>      # add a package to packages.json (n
   from: `cursor-themes/` (one cursor theme, used regardless of color
   theme), `kvantum/` (the base SVG + `.kvconfig` templates every theme's
   Qt build reuses), `icon-themes/` (the shared papirus-folders base
-  archive), `sudoers/`.
+  archive), `yazi-flavors/` (one `.yazi` flavor package per theme --
+  static reference material, installed once and picked by name at switch
+  time, not regenerated), `sudoers/`.
 - `scripts/` -- one-off maintenance tools, not part of the `main.py` CLI:
   `bake_icon_accents.py` (produces each theme's `icons/` snapshot,
   consumed by `setup papirus_folders` + `core/theme_appliers/icon_theme.py`)

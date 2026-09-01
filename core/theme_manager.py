@@ -10,9 +10,8 @@ file (GTK zip, icon accent tar, kitty/waybar/rofi/swaync/lsd color files,
 the generated Kvantum theme + .colors file) lives alongside it, one
 subfolder per app, under that same `themes/<name>/` directory.
 
-Fixed to three themes (gruvbox-dark, catppuccin-macchiato-mauve,
-catppuccin-latte) -- see `themes/*/theme.toml` and `themes/*/` for what
-each actually contains.
+One theme per folder under `themes/` -- see `themes/*/theme.toml` and
+`themes/*/` for what each actually contains.
 """
 
 import tomllib

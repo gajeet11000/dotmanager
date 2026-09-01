@@ -6,7 +6,7 @@ core.theme_manager.THEMES) and applies them to its one application, no-op'ing
 (returning False) if none of its keys are present in that profile -- so a
 theme can define only some apps and still be valid.
 
-To add support for a new app (fish, yazi, ...):
+To add support for a new app (fish, ...):
   1. Add a module here with an `apply(profile) -> bool` function.
   2. Add its `apply` to POST_LIVE_APPLIERS below (see PRE_LIVE_APPLIERS'
      docstring for the one case where it belongs there instead).
@@ -26,6 +26,7 @@ from core.theme_appliers import (
     rofi_theme,
     swaync_theme,
     waybar_theme,
+    yazi_theme,
 )
 
 # gtk_theme and icon_theme don't touch GTK live -- they only write fields
@@ -51,6 +52,7 @@ POST_LIVE_APPLIERS = [
     herdr_theme.apply,
     claude_theme.apply,
     qt_theme.apply,
+    yazi_theme.apply,
 ]
 
 APPLIERS = PRE_LIVE_APPLIERS + POST_LIVE_APPLIERS

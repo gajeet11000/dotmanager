@@ -13,6 +13,7 @@ rofi_theme = "catppuccin-macchiato-mauve"
 waybar_theme = "catppuccin-macchiato-mauve"
 herdr_theme = "catppuccin-macchiato-mauve"
 claude_theme = "catppuccin-macchiato-mauve"
+yazi_theme = "catppuccin-macchiato"
 
 [palette]
 base = "dark"
