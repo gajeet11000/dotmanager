@@ -6,10 +6,8 @@
 
 DOTMANAGER_DIR="$HOME/Projects/dotmanager"
 
-# main.py imports the hyprtheme library, which lives in this repo's uv
-# workspace (hyprtheme/, installed editable into .venv) rather than on the
-# system Python path -- run everything through `uv run --project` so it
-# resolves regardless of rofi's own cwd/environment.
+# Run everything through `uv run --project` so the right .venv resolves
+# regardless of rofi's own cwd/environment.
 run_dotmanager() {
 	uv run --project "$DOTMANAGER_DIR" python3 "$DOTMANAGER_DIR/main.py" "$@"
 }

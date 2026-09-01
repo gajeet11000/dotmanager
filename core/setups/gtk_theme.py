@@ -5,18 +5,18 @@ from core import shell
 
 # Bundled instead of pulled from AUR: these themes don't get updates upstream,
 # so there's nothing to gain from rebuilding them every time vs. just
-# unzipping copies we already have. Drop any theme zip in here and it's
-# picked up automatically.
-THEME_DIR = Path(__file__).resolve().parent.parent.parent / "assets" / "gtk-themes"
+# unzipping copies we already have. Drop a theme zip in any
+# themes/<name>/gtk/ and it's picked up automatically -- see THEMING.md.
+THEMES_DIR = Path(__file__).resolve().parent.parent.parent / "themes"
 
 # System-level, matching where the AUR packages used to install these.
 TARGET_DIR = Path("/usr/share/themes")
 
 
 def setup() -> None:
-    zips = sorted(THEME_DIR.glob("*.zip"))
+    zips = sorted(THEMES_DIR.glob("*/gtk/*.zip"))
     if not zips:
-        print(f"No theme archives found in '{THEME_DIR}'.")
+        print(f"No theme archives found under '{THEMES_DIR}/*/gtk/'.")
         return
 
     shell.run(["sudo", "mkdir", "-p", str(TARGET_DIR)])

@@ -4,17 +4,4 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "hyprtheme",
-    "hyprtheme-build",
-]
-
-[tool.uv.workspace]
-members = [
-    "hyprtheme",
-    "hyprtheme-build",
-]
-
-[tool.uv.sources]
-hyprtheme = { workspace = true, editable = true }
-hyprtheme-build = { workspace = true, editable = true }
+dependencies = []

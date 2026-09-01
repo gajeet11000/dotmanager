@@ -114,7 +114,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     setup_sub.add_parser(
         "gtk_theme",
-        help="Install all bundled GTK themes (assets/gtk-themes/*.zip) system-wide (no AUR rebuild)",
+        help="Install all bundled GTK themes (themes/*/gtk/*.zip) system-wide (no AUR rebuild)",
     )
     setup_sub.add_parser(
         "cursor_theme",

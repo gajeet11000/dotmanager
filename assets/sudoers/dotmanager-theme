@@ -3,7 +3,7 @@
 # switcher's keybind, for instance) -- see core/theme_appliers/icon_theme.py.
 #
 # Scoped to exactly the commands that step runs: extracting a .tar already
-# inside this repo's assets/icon-themes/, and rebuilding the icon cache for
+# inside this repo's themes/*/icons/, and rebuilding the icon cache for
 # exactly Papirus-Dark/Papirus-Light. Doesn't grant anything a user who
 # already owns this repo's files couldn't already do.
 #
@@ -12,6 +12,6 @@
 #
 # Adjust the username and repo path below if either differs from a fresh
 # clone at ~/Projects/dotmanager.
-gajeet ALL=(root) NOPASSWD: /usr/bin/tar -xf /home/gajeet/Projects/dotmanager/assets/icon-themes/*.tar -C /
+gajeet ALL=(root) NOPASSWD: /usr/bin/tar -xf /home/gajeet/Projects/dotmanager/themes/*/icons/*.tar -C /
 gajeet ALL=(root) NOPASSWD: /usr/bin/gtk-update-icon-cache -qf /usr/share/icons/Papirus-Dark
 gajeet ALL=(root) NOPASSWD: /usr/bin/gtk-update-icon-cache -qf /usr/share/icons/Papirus-Light
