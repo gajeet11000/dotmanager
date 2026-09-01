@@ -47,15 +47,51 @@ theme once, see step 9).
 
 ## 3. GTK theme
 
-Install the GTK theme package (or bundle a zip at
-`themes/catppuccin-latte/gtk/theme.zip`, picked up by `setup gtk_theme`).
-Note its exact installed folder name, e.g.:
+Two ways to get the theme onto disk -- pick one.
+
+**Option A -- install it as a package** (AUR/pacman/etc.):
+
+```sh
+yay -S catppuccin-gtk-theme-latte
+```
+
+Then list what's actually installed, and copy the exact folder name you want:
+
+```sh
+ls /usr/share/themes ~/.local/share/themes
+```
+
+**Option B -- bundle a zip in this repo** (so `setup gtk_theme` installs it
+on any fresh machine too, no AUR needed). A GTK theme zip's top level must
+be the theme folder(s) themselves -- unzipping it should drop straight
+into `/usr/share/themes/`, no extra wrapper folder:
 
 ```
-~/.local/share/themes/catppuccin-latte-mauve-standard+default/
+catppuccin-latte-mauve-standard+default.zip
+└── catppuccin-latte-mauve-standard+default/
+    ├── index.theme
+    ├── gtk-3.0/
+    │   ├── gtk.css
+    │   ├── gtk-dark.css
+    │   └── assets/
+    └── gtk-4.0/
+        ├── gtk.css
+        └── assets/
 ```
 
-Add to `theme.toml`:
+```sh
+mkdir -p themes/catppuccin-latte/gtk
+cp ~/Downloads/catppuccin-latte-mauve-standard+default.zip themes/catppuccin-latte/gtk/theme.zip
+uv run python3 main.py setup gtk_theme
+```
+
+Then confirm the exact installed folder name the same way as Option A:
+
+```sh
+ls /usr/share/themes ~/.local/share/themes
+```
+
+Add whichever exact name you got to `theme.toml`:
 
 ```toml
 [apps]
