@@ -1,0 +1,55 @@
+# lsd color theme -- Catppuccin Latte. RGB triples match the palette used
+# in themes/catppuccin-latte/kitty/theme.conf. Note: lsd hardcodes its
+# directory/file/symlink/device colors (the `file-type` section is not
+# user-configurable), so those aren't set here.
+user: [223, 142, 29]     # yellow
+group: [23, 146, 153]    # teal
+
+permission:
+  read: [64, 160, 43]         # green
+  write: [223, 142, 29]       # yellow
+  exec: [210, 15, 57]         # red
+  exec-sticky: [136, 57, 239] # mauve
+  no-access: [108, 111, 133]  # subtext0
+  octal: [23, 146, 153]       # teal
+  acl: [30, 102, 245]         # blue
+  context: [30, 102, 245]     # blue
+
+attributes:
+  archive: [64, 160, 43]      # green
+  read: [223, 142, 29]        # yellow
+  hidden: [136, 57, 239]      # mauve
+  system: [136, 57, 239]      # mauve
+
+date:
+  hour-old: [64, 160, 43]     # green
+  day-old: [223, 142, 29]     # yellow
+  older: [108, 111, 133]      # subtext0
+
+size:
+  none: [108, 111, 133]       # subtext0
+  small: [76, 79, 105]        # text
+  medium: [223, 142, 29]      # yellow
+  large: [254, 100, 11]       # peach
+
+inode:
+  valid: [136, 57, 239]       # mauve
+  invalid: [108, 111, 133]    # subtext0
+
+tree-edge: [108, 111, 133]    # subtext0
+
+links:
+  valid: [136, 57, 239]       # mauve
+  invalid: [108, 111, 133]    # subtext0
+
+git-status:
+  default: [108, 111, 133]        # subtext0
+  unmodified: [108, 111, 133]     # subtext0
+  ignored: [108, 111, 133]        # subtext0
+  new-in-index: [64, 160, 43]     # green
+  new-in-workdir: [64, 160, 43]   # green
+  typechange: [223, 142, 29]      # yellow
+  deleted: [210, 15, 57]          # red
+  renamed: [64, 160, 43]          # green
+  modified: [223, 142, 29]        # yellow
+  conflicted: [210, 15, 57]       # red

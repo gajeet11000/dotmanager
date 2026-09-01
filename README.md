@@ -38,7 +38,7 @@ uv run python3 main.py setup papirus_folders # installs papirus-folders + the ca
                                        # themes/catppuccin-macchiato-mauve/icons/ symlinks to
                                        # files this step provides, not stock Papirus)
 
-# 5. Apply a theme
+# 5. Apply a theme (gruvbox-dark, catppuccin-macchiato-mauve, catppuccin-latte)
 uv run python3 main.py theme list
 uv run python3 main.py theme set catppuccin-macchiato-mauve
 ```
@@ -75,13 +75,6 @@ uv run python3 main.py stow restow <pkg>     # re-link a package after editing d
 uv run python3 main.py manage add <pkg>      # add a package to packages.json (name | name/aur | name/flatpak)
 ```
 
-## Adding a new theme
-
-See **[THEMING.md](THEMING.md)** for the full walkthrough -- a step-by-step,
-no-Python-required guide to adding a theme and wiring it up for every app
-this repo themes (GTK, icons, Qt/KDE, kitty, waybar, rofi, swaync, lsd,
-nvim, herdr, Claude Code).
-
 ## Layout
 
 - `dotfiles/<package>/` -- one GNU Stow package per app, mirroring `$HOME`'s
@@ -89,13 +82,12 @@ nvim, herdr, Claude Code).
 - `core/theme_manager.py` + `core/theme_appliers/*.py` -- the theme
   switcher. Plain and manual on purpose: one Python module per app, each
   reading whatever key(s) it needs out of a theme's `themes/<name>/theme.toml`
-  and writing/copying the right file. No plugin system, no generic DSL --
-  see [THEMING.md](THEMING.md) for how it all fits together.
-- `themes/<name>/` -- one folder per theme (gruvbox-dark,
-  catppuccin-macchiato-mauve, github-light), holding its `theme.toml` plus
-  one subfolder per app that needs an actual file (`gtk/`, `icons/`, `qt/`,
-  `kitty/`, `waybar/`, `rofi/`, `swaync/`, `lsd/`). Add/remove a theme by
-  adding/removing this one folder -- see THEMING.md for the full layout.
+  and writing/copying the right file. No plugin system, no generic DSL.
+- `themes/<name>/` -- one folder per theme. Fixed to three: `gruvbox-dark`,
+  `catppuccin-macchiato-mauve`, `catppuccin-latte` -- this is the whole
+  set, not a pattern meant to grow. Each holds its `theme.toml` plus one
+  subfolder per app that needs an actual file (`gtk/`, `icons/`, `qt/`,
+  `kitty/`, `waybar/`, `rofi/`, `swaync/`, `lsd/`).
 - `core/setups/` -- one-time system setup routines (`main.py setup <name>`),
   each installing a bundled asset rather than rebuilding it from source
   (AUR `-git` packages, slow to build, for things that don't need to track
@@ -108,5 +100,5 @@ nvim, herdr, Claude Code).
 - `scripts/` -- one-off maintenance tools, not part of the `main.py` CLI:
   `bake_icon_accents.py` (produces each theme's `icons/` snapshot,
   consumed by `setup papirus_folders` + `core/theme_appliers/icon_theme.py`)
-  and `build_qt_theme.py` (produces each theme's `qt/` output, see
-  THEMING.md).
+  and `build_qt_theme.py` (produces each theme's `qt/` output). Both only
+  need rerunning if something about these three themes' assets changes.

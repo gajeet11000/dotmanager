@@ -1,0 +1,58 @@
+/* swaync theme -- Catppuccin Latte. Imports the packaged stylesheet for
+   all component layout rules, then overrides just the color variables it
+   defines. Values are Catppuccin's own published Latte palette (see
+   themes/catppuccin-latte/kitty/theme.conf) -- base/mantle/crust for the
+   background layers, mauve for the accent. */
+@import url("file:///etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(239, 241, 245, 0.92);
+  --noti-border-color: rgba(172, 176, 190, 0.6);
+  --noti-bg: 230, 233, 239;
+  --noti-bg-alpha: 0.95;
+  --noti-bg-darker: rgb(220, 224, 232);
+  --noti-bg-hover: rgb(204, 208, 218);
+  --noti-bg-focus: rgba(204, 208, 218, 0.6);
+  --noti-close-bg: rgba(76, 79, 105, 0.08);
+  --noti-close-bg-hover: rgba(76, 79, 105, 0.15);
+  --text-color: rgb(76, 79, 105);
+  --text-color-disabled: rgb(108, 111, 133);
+  --bg-selected: rgb(136, 57, 239);
+}
+
+@define-color cc-bg rgba(239, 241, 245, 0.92);
+@define-color noti-border-color rgba(172, 176, 190, 0.6);
+@define-color noti-bg rgba(230, 233, 239, 0.95);
+@define-color noti-bg-opaque rgb(230, 233, 239);
+@define-color noti-bg-darker rgb(220, 224, 232);
+@define-color noti-bg-hover rgb(204, 208, 218);
+@define-color noti-bg-hover-opaque rgb(204, 208, 218);
+@define-color noti-bg-focus rgba(204, 208, 218, 0.6);
+@define-color noti-close-bg rgba(76, 79, 105, 0.08);
+@define-color noti-close-bg-hover rgba(76, 79, 105, 0.15);
+@define-color text-color rgb(76, 79, 105);
+@define-color text-color-disabled rgb(108, 111, 133);
+@define-color bg-selected rgb(136, 57, 239);
+
+/* Native GTK switch/toggle widgets: the packaged stylesheet only sets
+   border-radius/margin on these, never color, so they otherwise inherit
+   whatever accent the active GTK theme provides instead of this one. */
+switch,
+.widget-buttons-grid flowboxchild > button.toggle {
+  background-color: rgba(108, 111, 133, 0.3);
+  background-image: none;
+}
+
+switch slider {
+  background-color: rgb(108, 111, 133);
+}
+
+switch:checked,
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background-color: var(--bg-selected);
+  background-image: none;
+}
+
+switch:checked slider {
+  background-color: rgb(255, 255, 255);
+}

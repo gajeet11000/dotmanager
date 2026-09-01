@@ -12,10 +12,19 @@ symlink alias to folder-video.svg for most colors, and papirus-folders'
 change_color() skips anything that's already a symlink, so "videos" never
 gets repointed).
 
-Run this once whenever a new (accent, icon_theme) pair is added to a theme
-that isn't covered by COMBOS below yet. Needs sudo -- one password prompt
-covers the whole run via sudo's credential cache.
+Covers the fixed set of themes dotmanager actually uses (gruvbox-dark,
+catppuccin-macchiato-mauve, catppuccin-latte) -- COMBOS below isn't meant
+to grow. Rerun this only if one of these needs re-baking (e.g. after a
+papirus-icon-theme update, or a fix to the baking logic itself). Needs
+sudo -- one password prompt covers the whole run via sudo's credential
+cache.
+
+Skips any combo whose output .tar already exists -- baking is the whole
+point of avoiding papirus-folders' slow live run, so re-running this
+script shouldn't redo work for combos nothing changed about. Pass --force
+to rebake everything anyway.
 """
+import argparse
 import subprocess
 import tarfile
 from pathlib import Path
@@ -27,7 +36,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMBOS = [
     ("orange", "Papirus-Dark", "gruvbox-dark"),
     ("cat-macchiato-mauve", "Papirus-Dark", "catppuccin-macchiato-mauve"),
-    ("blue", "Papirus-Light", "github-light"),
+    ("cat-latte-mauve", "Papirus-Light", "catppuccin-latte"),
 ]
 
 PLACES_GLOB_DIRS = ["/usr/share/icons/Papirus", "/usr/share/icons/Papirus-Dark", "/usr/share/icons/Papirus-Light"]
@@ -53,9 +62,8 @@ def _bake(accent: str, icon_theme: str) -> None:
 
 
 def _snapshot(accent: str, icon_theme: str, theme: str) -> Path:
-    out_dir = REPO_ROOT / "themes" / theme / "icons"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out = out_dir / f"{accent}__{icon_theme}.tar"
+    out = _output_path(accent, icon_theme, theme)
+    out.parent.mkdir(parents=True, exist_ok=True)
 
     symlinks = [
         f
@@ -70,8 +78,22 @@ def _snapshot(accent: str, icon_theme: str, theme: str) -> Path:
     return out
 
 
+def _output_path(accent: str, icon_theme: str, theme: str) -> Path:
+    return REPO_ROOT / "themes" / theme / "icons" / f"{accent}__{icon_theme}.tar"
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--force", action="store_true", help="rebake combos that already have an output .tar"
+    )
+    args = parser.parse_args()
+
     for accent, icon_theme, theme in COMBOS:
+        out = _output_path(accent, icon_theme, theme)
+        if out.exists() and not args.force:
+            print(f"Skipping accent='{accent}' theme='{icon_theme}' -- already baked at {out}")
+            continue
         _bake(accent, icon_theme)
         _snapshot(accent, icon_theme, theme)
     print("Done.")

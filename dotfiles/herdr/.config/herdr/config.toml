@@ -1,25 +1,25 @@
 onboarding = false
 
 [theme]
-name = "gruvbox"
+name = "one-light"
 
 [theme.custom]
-accent = "#d79921"
-panel_bg = "#282828"
-surface0 = "#3c3836"
-surface1 = "#504945"
-surface_dim = "#665c54"
-overlay0 = "#7c6f64"
-overlay1 = "#928374"
-text = "#ebdbb2"
-subtext0 = "#bdae93"
-mauve = "#d3869b"
-green = "#b8bb26"
-yellow = "#fabd2f"
-red = "#fb4934"
-blue = "#83a598"
-teal = "#8ec07c"
-peach = "#fe8019"
+accent = "#8839ef"
+panel_bg = "#eff1f5"
+surface0 = "#ccd0da"
+surface1 = "#bcc0cc"
+surface_dim = "#acb0be"
+overlay0 = "#9ca0b0"
+overlay1 = "#8c8fa1"
+text = "#4c4f69"
+subtext0 = "#6c6f85"
+mauve = "#8839ef"
+green = "#40a02b"
+yellow = "#df8e1d"
+red = "#d20f39"
+blue = "#1e66f5"
+teal = "#179299"
+peach = "#fe640b"
 
 [keys]
 prefix = "ctrl+s"

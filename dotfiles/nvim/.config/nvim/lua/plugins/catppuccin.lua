@@ -1,10 +1,21 @@
-return { 
+-- flavour is read from the active dotmanager theme (config/theme.lua's
+-- M.PROFILES), not hardcoded -- lazy.nvim evaluates this opts table at
+-- startup, before config/lazy.lua's M.apply(...) call switches the actual
+-- colorscheme, so this is the only place that can pick the right flavour
+-- for whichever catppuccin-flavoured theme is currently active. Falls
+-- back to "macchiato" if the current theme isn't a catppuccin one at all
+-- (this plugin's config still loads either way, just unused).
+local current_theme = require("config.current-theme")
+local profile = require("config.theme").PROFILES[current_theme]
+local flavour = (profile and profile.flavour) or "macchiato"
+
+return {
   "catppuccin/nvim",
   lazy = false,
   name = "catppuccin",
   priority = 1000,
   opts = {
-    flavour = "macchiato",
+    flavour = flavour,
     transparent_background = true,
     -- transparent_background strips background from more than just the
     -- editor area -- WinBar (vim.opt.winbar = "%t" in config/options.lua)
@@ -18,4 +29,3 @@ return {
     end,
   }
 }
-

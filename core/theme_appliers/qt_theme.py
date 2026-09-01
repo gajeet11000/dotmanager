@@ -1,8 +1,8 @@
 """Applies a theme profile's colors to Qt5/Qt6/KDE apps, from files already
 built by scripts/build_qt_theme.py (run once per theme, not on every
-switch -- see THEMING.md). This module only ever *points* at that
-pre-built output: a symlink into ~/.config/Kvantum (created once, left
-alone after) and a couple of config-key writes. No color math here.
+switch). This module only ever *points* at that pre-built output: a
+symlink into ~/.config/Kvantum (created once, left alone after) and a
+couple of config-key writes. No color math here.
 
 This took three real, verified mechanisms to get right -- each layer
 below covers a gap the previous one left, discovered by screenshotting

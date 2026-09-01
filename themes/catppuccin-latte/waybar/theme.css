@@ -1,0 +1,42 @@
+/*
+* waybar palette -- Catppuccin Latte. Values are Catppuccin's own
+* published Latte palette, pulled from catppuccin/waybar's latte.css.
+*
+* mainbar-bg-1/2/3 are the three gradient stops for .mainbar's glass
+* background (dotfiles/waybar/.config/waybar/style.css) -- not part of
+* Catppuccin's own CSS, so they don't come from upstream; a "white glass"
+* look matching github-light's, high-alpha to minimize see-through.
+* Without these three defined, the gradient background silently fails
+* and the whole bar renders fully transparent.
+*/
+
+@define-color mainbar-bg-1 rgba(239, 241, 245, 0.83);
+@define-color mainbar-bg-2 rgba(230, 233, 239, 0.85);
+@define-color mainbar-bg-3 rgba(220, 224, 232, 0.80);
+
+@define-color rosewater #dc8a78;
+@define-color flamingo #dd7878;
+@define-color pink #ea76cb;
+@define-color mauve #8839ef;
+@define-color red #d20f39;
+@define-color maroon #e64553;
+@define-color peach #fe640b;
+@define-color yellow #df8e1d;
+@define-color green #40a02b;
+@define-color teal #179299;
+@define-color sky #04a5e5;
+@define-color sapphire #209fb5;
+@define-color blue #1e66f5;
+@define-color lavender #7287fd;
+@define-color text #4c4f69;
+@define-color subtext1 #5c5f77;
+@define-color subtext0 #6c6f85;
+@define-color overlay2 #7c7f93;
+@define-color overlay1 #8c8fa1;
+@define-color overlay0 #9ca0b0;
+@define-color surface2 #acb0be;
+@define-color surface1 #bcc0cc;
+@define-color surface0 #ccd0da;
+@define-color base #eff1f5;
+@define-color mantle #e6e9ef;
+@define-color crust #dce0e8;

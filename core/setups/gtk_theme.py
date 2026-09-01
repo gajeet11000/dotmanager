@@ -5,8 +5,7 @@ from core import shell
 
 # Bundled instead of pulled from AUR: these themes don't get updates upstream,
 # so there's nothing to gain from rebuilding them every time vs. just
-# unzipping copies we already have. Drop a theme zip in any
-# themes/<name>/gtk/ and it's picked up automatically -- see THEMING.md.
+# unzipping copies we already have. Picks up any zip under themes/<name>/gtk/.
 THEMES_DIR = Path(__file__).resolve().parent.parent.parent / "themes"
 
 # System-level, matching where the AUR packages used to install these.

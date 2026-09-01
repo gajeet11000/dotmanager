@@ -9,9 +9,9 @@ is a fixed preset, nothing computed at runtime, so this renders it once,
 here; core/theme_appliers/qt_theme.py just symlinks to the result at
 `theme set` time. No color math happens on every switch.
 
-Run this once whenever you add a theme with a [palette] table, or change an
-existing one's palette values (see THEMING.md). Safe to rerun any time --
-it regenerates every theme's output from scratch, so nothing goes stale.
+Covers the fixed set of themes dotmanager actually uses -- rerun this only
+if one of their [palette] values changes. Safe to rerun any time -- it
+regenerates every theme's output from scratch, so nothing goes stale.
 
 base-dark.svg and base-light.svg (assets/kvantum/) are pure-shape SVG
 templates (verified `grep 'fill="#'` matches nothing in either), copied
