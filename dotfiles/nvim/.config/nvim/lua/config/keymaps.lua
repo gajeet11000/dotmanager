@@ -23,7 +23,7 @@ map("n", "<leader>tc", "<cmd>tabclose<CR>", { desc = "Close tab" })
 map("n", "<leader>to", "<cmd>tabonly<CR>", { desc = "Close other tabs" })
 map("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "New tab" })
 
-local sunglasses_enabled = true  -- plugin dims by default on startup with no setup needed
+local sunglasses_enabled = false  -- plugin dims by default on startup with no setup needed
 
 local function toggle_sunglasses()
   sunglasses_enabled = not sunglasses_enabled
