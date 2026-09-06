@@ -29,7 +29,7 @@ hl.bind(SUPER .. "+N", hl.dsp.exec_cmd(vars.TOGGLE_NOTIFICATION_CENTER))
 hl.bind(SUPER_ALT .. "+B", hl.dsp.exec_cmd(vars.SET_RANDOM_WALLPAPER))
 
 -- Window actions
-hl.bind(SUPER .. "+F", hl.dsp.window.fullscreen({mode="maximized", action="toggle"}))
+hl.bind(SUPER .. "+F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(SUPER .. "+C", hl.dsp.window.close())
 hl.bind(SUPER_SHIFT .. "+C", hl.dsp.window.kill())
 hl.bind(SUPER .. "+G", hl.dsp.group.toggle())
@@ -38,16 +38,16 @@ hl.bind(SUPER_CTRL .. "+R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(SUPER_ALT .. "+V", hl.dsp.layout("togglesplit"))
 
 -- Move focus (Arrow keys)
-hl.bind(SUPER .. "+LEFT",  hl.dsp.focus({direction="l"}))
-hl.bind(SUPER .. "+RIGHT", hl.dsp.focus({direction="r"}))
-hl.bind(SUPER .. "+UP",    hl.dsp.focus({direction="u"}))
-hl.bind(SUPER .. "+DOWN",  hl.dsp.focus({direction="d"}))
+hl.bind(SUPER .. "+LEFT", hl.dsp.focus({ direction = "l" }))
+hl.bind(SUPER .. "+RIGHT", hl.dsp.focus({ direction = "r" }))
+hl.bind(SUPER .. "+UP", hl.dsp.focus({ direction = "u" }))
+hl.bind(SUPER .. "+DOWN", hl.dsp.focus({ direction = "d" }))
 
 -- Move focus (Vim keys)
-hl.bind(SUPER .. "+H", hl.dsp.focus({direction="l"}))
-hl.bind(SUPER .. "+L", hl.dsp.focus({direction="r"}))
-hl.bind(SUPER .. "+K", hl.dsp.focus({direction="u"}))
-hl.bind(SUPER .. "+J", hl.dsp.focus({direction="d"}))
+hl.bind(SUPER .. "+H", hl.dsp.focus({ direction = "l" }))
+hl.bind(SUPER .. "+L", hl.dsp.focus({ direction = "r" }))
+hl.bind(SUPER .. "+K", hl.dsp.focus({ direction = "u" }))
+hl.bind(SUPER .. "+J", hl.dsp.focus({ direction = "d" }))
 
 -- Resize (repeating)
 hl.bind(SUPER_CTRL .. "+H", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
@@ -65,10 +65,10 @@ hl.bind(SUPER_SHIFT .. "+J", hl.dsp.window.move({ direction = "d" }))
 -- Move and follow active window to a workspace with SUPER + SHIFT + [0-9]
 -- Move active window without follow to a workspace with SUPER + CTRL + [0-9]
 for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    hl.bind(SUPER .. "+" .. key, hl.dsp.focus({ workspace=i }))
-    hl.bind(SUPER_SHIFT .. "+" .. key, hl.dsp.window.move({ workspace=i, follow=true }))
-    hl.bind(SUPER_CTRL .. "+" .. key, hl.dsp.window.move({ workspace=i, follow=false }))
+  local key = i % 10   -- 10 maps to key 0
+  hl.bind(SUPER .. "+" .. key, hl.dsp.focus({ workspace = i }))
+  hl.bind(SUPER_SHIFT .. "+" .. key, hl.dsp.window.move({ workspace = i, follow = true }))
+  hl.bind(SUPER_CTRL .. "+" .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 hl.bind(SUPER_SHIFT .. "+COMMA", hl.dsp.window.move({ workspace = "-1", follow = true }))
@@ -82,38 +82,37 @@ hl.bind(SUPER .. "+SHIFT+S", hl.dsp.window.move({ workspace = "special:magic", f
 hl.bind(SUPER .. "+mouse_down", function() utils.zoom(-0.1) end)
 hl.bind(SUPER .. "+mouse_up", function() utils.zoom(0.1) end)
 
-hl.bind(SUPER .. "+EQUAL", function() utils.zoom(0.1) end, {repeating=true})
-hl.bind(SUPER .. "+MINUS", function() utils.zoom(-0.1) end, {repeating=true})
-hl.bind(SUPER .. "+KP_ADD", function() utils.zoom(0.1) end, {repeating=true})
-hl.bind(SUPER .. "+KP_SUBTRACT", function() utils.zoom(-0.1) end, {repeating=true})
+hl.bind(SUPER .. "+EQUAL", function() utils.zoom(0.1) end, { repeating = true })
+hl.bind(SUPER .. "+MINUS", function() utils.zoom(-0.1) end, { repeating = true })
+hl.bind(SUPER .. "+KP_ADD", function() utils.zoom(0.1) end, { repeating = true })
+hl.bind(SUPER .. "+KP_SUBTRACT", function() utils.zoom(-0.1) end, { repeating = true })
 
 -- Scratchpads/Special workspaces
 hl.bind(SUPER_ALT .. "+P", hl.dsp.exec_cmd(utils.scratchpad_cmd({
-    identifier="Whatsapp",
-    scratch="Whatsapp",
-    exec= vars.SCRATCHPAD_BROWSER .. " --app=https://web.whatsapp.com"
+  identifier = "Whatsapp",
+  scratch = "Whatsapp",
+  exec = vars.SCRATCHPAD_BROWSER .. " --app=https://web.whatsapp.com"
 })))
 
 hl.bind(SUPER_ALT .. "+SPACE", hl.dsp.exec_cmd(utils.scratchpad_cmd({
-    identifier="Youtube Music",
-    scratch="Music",
-    exec= vars.SCRATCHPAD_BROWSER .. " --app=https://music.youtube.com"
+  identifier = "sonora",
+  scratch = "Music",
+  exec = "sonora"
 })))
 
 hl.bind(SUPER .. "+E", hl.dsp.exec_cmd(utils.scratchpad_cmd({
-    identifier="yazi",
-    scratch="Yazi",
-    exec="kitty --class yazi -e yazi"
+  identifier = "yazi",
+  scratch = "Yazi",
+  exec = "kitty --class yazi -e yazi"
 })))
 
-
 hl.bind(SUPER .. "+V", hl.dsp.exec_cmd(
-    "kitty --class clipse -o font_size=14 -e clipse",
-    {float=true, size={"(monitor_w*0.5)", "(monitor_h*0.5)"}}
+  "kitty --class clipse -o font_size=14 -e clipse",
+  { float = true, size = { "(monitor_w*0.5)", "(monitor_h*0.5)" } }
 ))
 
-hl.bind(SUPER .. "+PERIOD", hl.dsp.focus({workspace="e+1"}))
-hl.bind(SUPER .. "+COMMA", hl.dsp.focus({workspace="e-1"}))
+hl.bind(SUPER .. "+PERIOD", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(SUPER .. "+COMMA", hl.dsp.focus({ workspace = "e-1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(SUPER .. "+mouse:272", hl.dsp.window.drag())
@@ -128,12 +127,12 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(vars.BRIGHTNESS .. " --inc"), { l
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(vars.BRIGHTNESS .. " --dec"), { locked = true, repeating = true })
 
 -- Hyprsunset controls
-hl.bind(SUPER_ALT .. " +I", hl.dsp.exec_cmd("hyprctl hyprsunset gamma +5"), {locked = true, repeating=true})
-hl.bind(SUPER_ALT .. " +U", hl.dsp.exec_cmd("hyprctl hyprsunset gamma -5"),{locked = true, repeating=true} )
-hl.bind(SUPER_ALT .. " +0", hl.dsp.exec_cmd("hyprctl hyprsunset temperature +200"),{locked = true, repeating=true})
-hl.bind(SUPER_ALT .. " +9", hl.dsp.exec_cmd("hyprctl hyprsunset temperature -200"),{locked = true, repeating=true})
-hl.bind(SUPER .. " +O", hl.dsp.exec_cmd("hyprctl hyprsunset reset"),{locked = true})
-hl.bind(SUPER_ALT .. " +O", hl.dsp.exec_cmd("hyprctl hyprsunset identity"),{locked = true})
+hl.bind(SUPER_ALT .. " +I", hl.dsp.exec_cmd("hyprctl hyprsunset gamma +5"), { locked = true, repeating = true })
+hl.bind(SUPER_ALT .. " +U", hl.dsp.exec_cmd("hyprctl hyprsunset gamma -5"), { locked = true, repeating = true })
+hl.bind(SUPER_ALT .. " +0", hl.dsp.exec_cmd("hyprctl hyprsunset temperature +200"), { locked = true, repeating = true })
+hl.bind(SUPER_ALT .. " +9", hl.dsp.exec_cmd("hyprctl hyprsunset temperature -200"), { locked = true, repeating = true })
+hl.bind(SUPER .. " +O", hl.dsp.exec_cmd("hyprctl hyprsunset reset"), { locked = true })
+hl.bind(SUPER_ALT .. " +O", hl.dsp.exec_cmd("hyprctl hyprsunset identity"), { locked = true })
 
 hl.bind(SUPER_ALT .. "+PERIOD", hl.dsp.exec_cmd(vars.VOLUME .. " --inc"), { locked = true, repeating = true })
 hl.bind(SUPER_ALT .. "+COMMA", hl.dsp.exec_cmd(vars.VOLUME .. " --dec"), { locked = true, repeating = true })
