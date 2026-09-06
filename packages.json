@@ -12,7 +12,8 @@
     "waypaper",
     "clipse",
     "stacer-bin",
-    "herdr-bin"
+    "herdr-bin",
+    "sonora-bin"
   ],
 
   "flatpak": [
