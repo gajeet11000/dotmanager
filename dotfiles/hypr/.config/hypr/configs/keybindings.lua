@@ -95,9 +95,9 @@ hl.bind(SUPER_ALT .. "+P", hl.dsp.exec_cmd(utils.scratchpad_cmd({
 })))
 
 hl.bind(SUPER_ALT .. "+SPACE", hl.dsp.exec_cmd(utils.scratchpad_cmd({
-  identifier = "sonora",
+  identifier = "com.github.th-ch.youtube-music",
   scratch = "Music",
-  exec = "sonora"
+  exec = "youtube-music"
 })))
 
 hl.bind(SUPER .. "+E", hl.dsp.exec_cmd(utils.scratchpad_cmd({
