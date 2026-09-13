@@ -1,11 +1,15 @@
 import re
+import time
 from pathlib import Path
 
 from core import shell
 
 # Module-level so paths can be pointed elsewhere in tests.
 FONTS_DEST = "/usr/share/fonts"
+SDDM_CONF_PATH = "/etc/sddm.conf"
+SDDM_CONF_SRC = str(Path(__file__).parent / "sddm.conf")
 
+# SDDM astronaut theme (https://github.com/keyitdev/sddm-astronaut-theme)
 SDDM_THEME_REPO = "https://github.com/keyitdev/sddm-astronaut-theme.git"
 SDDM_THEME_NAME = "sddm-astronaut-theme"
 SDDM_THEME_DIR = f"/usr/share/sddm/themes/{SDDM_THEME_NAME}"
@@ -67,5 +71,23 @@ def _set_style(theme_dir: Path, style: str) -> None:
     shell.run_with_input(["sudo", "tee", str(metadata_path)], new_content)
 
 
+def install_conf() -> None:
+    src = Path(SDDM_CONF_SRC)
+    dest = Path(SDDM_CONF_PATH)
+
+    if not src.exists():
+        print(f"Source config '{src}' not found, skipping.")
+        return
+
+    if dest.exists():
+        backup_path = dest.with_suffix(dest.suffix + f".bak.{int(time.time())}")
+        print(f"'{dest}' already exists, backing up to '{backup_path}'")
+        shell.run(["sudo", "cp", str(dest), str(backup_path)])
+
+    print(f"Copying {src} -> {dest}")
+    shell.run(["sudo", "cp", str(src), str(dest)])
+
+
 def run_all() -> None:
     install_theme()
+    install_conf()
