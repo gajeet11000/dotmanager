@@ -12,7 +12,7 @@
     "clipse",
     "stacer-bin",
     "herdr-bin",
-    "sonora-bin"
+    "pear-desktop-bin"
   ],
 
   "flatpak": [
@@ -72,7 +72,6 @@
     "lazygit",
     "libreoffice-still",
     "lsd",
-    "materia-gtk-theme",
     "mission-center",
     "mpv",
     "neovim",
