@@ -19,7 +19,7 @@ alias remove="yay -Rnsd "
 
 
 fish_vi_key_bindings
-bind -M insert -m default ii backward-char force-repaint
+# bind -M insert -m default ii backward-char force-repaint
 bind -M insert \ef accept-autosuggestion
 
 starship init fish | source
